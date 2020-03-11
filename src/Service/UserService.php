@@ -16,11 +16,17 @@ class UserService
         $this->em = $em;
     }
 
-    public function saveUser(User $user)
+    public function createUser(User $user)
     {
         $user->setRoles(['ROLE_USER']);
         $user->setPassword(null);
 
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
+    public function updateUser(User $user)
+    {
         $this->em->persist($user);
         $this->em->flush();
     }

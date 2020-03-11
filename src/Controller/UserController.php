@@ -42,7 +42,35 @@ class UserController extends AbstractController
         if ($form->isSubmitted()) {
             $student = $form->getData();
 
-            $userService->saveUser($student);
+            $userService->createUser($student);
+
+            return $this->redirectToRoute('admin_students');
+        }
+
+        return $this->render('user/new.html.twig', [
+            'controller_name' => 'UserController',
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/students/edit/{id}", name="admin_students_edit")
+     * @param Request $request
+     * @param UserService $userService
+     * @param int $id
+     * @return Response
+     */
+    public function editStudent(Request $request, UserService $userService, int $id)
+    {
+        $student = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        $form = $this->createForm(RegisterFormType::class, $student);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $student = $form->getData();
+
+            $userService->updateUser($student);
 
             return $this->redirectToRoute('admin_students');
         }
