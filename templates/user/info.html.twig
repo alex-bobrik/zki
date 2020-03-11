@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+    <p>Username: {{ student.username }}</p>
+    <p>Full name: {{ student.fullName }}</p>
+    <p>Group: {{ student.groups.name }}</p>
+    <a href="{{ path('admin_students_edit', {'id': student.id}) }}">Edit</a>
+
+{% endblock %}

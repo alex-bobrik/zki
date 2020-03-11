@@ -27,6 +27,21 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/admin/students/{id}", name="admin_students_info")
+     * @param int $id
+     * @return Response
+     */
+    public function studentInfo(int $id)
+    {
+        $student = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        return $this->render('user/info.html.twig', [
+            'controller_name' => 'UserController',
+            'student' => $student,
+        ]);
+    }
+
+    /**
      * @Route("/admin/students/new", name="admin_students_new")
      * @param Request $request
      * @param UserService $userService

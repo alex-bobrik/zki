@@ -16,7 +16,7 @@
             {% if user.roles[0] != 'ROLE_ADMIN' %}
                 <tr>
                     <td>
-                        <a href="{{ path('admin_students_edit', {'id': user.id}) }}">
+                        <a href="{{ path('admin_students_info', {'id': user.id}) }}">
                             {{ user.username }}
                         </a>
                     </td>
