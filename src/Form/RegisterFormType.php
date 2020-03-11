@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Groups;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -28,6 +30,13 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Full Name',
                 ]
+            ])
+            ->add('groups', EntityType::class, [
+                'class' => Groups::class,
+                'choice_label' => 'name',
+                'mapped' => true,
+                'multiple' => false,
+                'attr' => ['class'=> 'form-control']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Save',

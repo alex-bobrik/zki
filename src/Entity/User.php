@@ -38,6 +38,11 @@ class User implements UserInterface
      */
     private $fullName;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Groups", inversedBy="users")
+     */
+    private $groups;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,18 @@ class User implements UserInterface
     public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getGroups(): ?Groups
+    {
+        return $this->groups;
+    }
+
+    public function setGroups(?Groups $groups): self
+    {
+        $this->groups = $groups;
 
         return $this;
     }
