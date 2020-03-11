@@ -31,7 +31,7 @@ class UserService
         $this->em->flush();
     }
 
-    private function encodePassword(UserPasswordEncoderInterface $passwordEncoder, User $user): string
+    public function encodePassword(UserPasswordEncoderInterface $passwordEncoder, User $user): string
     {
         return $passwordEncoder->encodePassword($user, $user->getPassword());
     }
