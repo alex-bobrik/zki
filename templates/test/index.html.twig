@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block body %}
+
+    {% for test in tests %}
+        <p>Name: {{ test.name }}</p>
+    {% endfor %}
+
+{% endblock %}

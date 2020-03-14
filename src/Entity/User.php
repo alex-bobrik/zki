@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -42,6 +44,16 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Groups", inversedBy="users")
      */
     private $groups;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TestResult", mappedBy="students")
+     */
+    private $testResults;
+
+    public function __construct()
+    {
+        $this->testResults = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +148,37 @@ class User implements UserInterface
     public function setGroups(?Groups $groups): self
     {
         $this->groups = $groups;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TestResult[]
+     */
+    public function getTestResults(): Collection
+    {
+        return $this->testResults;
+    }
+
+    public function addTestResult(TestResult $testResult): self
+    {
+        if (!$this->testResults->contains($testResult)) {
+            $this->testResults[] = $testResult;
+            $testResult->setStudents($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestResult(TestResult $testResult): self
+    {
+        if ($this->testResults->contains($testResult)) {
+            $this->testResults->removeElement($testResult);
+            // set the owning side to null (unless already changed)
+            if ($testResult->getStudents() === $this) {
+                $testResult->setStudents(null);
+            }
+        }
 
         return $this;
     }
