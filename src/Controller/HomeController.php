@@ -12,9 +12,7 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $a = array('1', '2', '3');
 
-        var_dump(count($a)); die;
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

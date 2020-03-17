@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RazdelController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}">Изменить название раздела</a>
+            <br>
+            <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}">Удалить раздел</a>
+            <br>
+        {% endif %}
+
+        <h3>Раздел: {{ razdel.name }}</h3>
+
+        <table>
+            <thead>
+                <th scope="col">Лекции</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th scope="col">Статус</th>
+                {% endif %}
+            </thead>
+            <tbody>
+            {% for lection in razdel.lections %}
+                <tr>
+                    <td>
+                        <a href="{{ path('razdel_lection_info', {'lectId': lection.id, 'id': razdel.id}) }}">{{ lection.name }}</a>
+                    </td>
+                        <td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {% if lection.isComplete %}
+                                    <a href="{{ path('admin_lection_change', {'id': lection.id}) }}">Прошли</a>
+                                {% else %}
+                                    <a href="{{ path('admin_lection_change', {'id': lection.id}) }}">Не прошли</a>
+                                {% endif %}
+                            {% else %}
+                                {% if lection.isComplete %}
+                                    Прошли
+                                {% else %}
+                                    Не прошли
+                                {% endif %}
+                            {% endif %}
+
+                        </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

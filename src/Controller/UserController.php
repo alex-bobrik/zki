@@ -27,7 +27,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/students/{id}", name="admin_students_info")
+     * @Route("/admin/students/{id}", name="admin_students_info", requirements={"id"="\d+"})
      * @param int $id
      * @return Response
      */

@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/student/account", name="student_account")
+     * @Route("/account", name="student_account")
      */
     public function index()
     {
@@ -30,7 +30,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/student/account/password", name="student_account_password-edit")
+     * @Route("/account/password", name="student_account_password-edit")
      * @param Request $request
      * @param UserService $userService
      * @param UserPasswordEncoderInterface $passwordEncoder

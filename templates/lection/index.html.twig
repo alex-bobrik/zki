@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LectionController!{% endblock %}
+
+{% block body %}
+
+    {% for lection in lections %}
+        <div style="margin-bottom: 20px">
+            <p>Name: {{ lection.name }}</p>
+{#            <p>Razdel: {{ lection.razdel.name }}</p>#}
+            {% for material in lection.materials %}
+                <a href="{{ asset('files/' ~ material.fileName) }}">View doc</a>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endblock %}

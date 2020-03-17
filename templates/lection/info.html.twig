@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LectionController!{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_lection_delete', {'id': lection.id}) }}">Удалить лекцию</a>
+    {% endif %}
+
+ <p>Name: {{ lection.name }}</p>
+ <div>
+     <ul>
+         {% for mat in lection.materials %}
+             <a href="{{ asset('files/' ~ mat.fileName) }}">{{ mat.name }}</a>
+         {% endfor %}
+     </ul>
+ </div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RazdelController!{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_razdel_new') }}">Новый раздел</a>
+        <a href="{{ path('admin_lection_new') }}">Добавить новую лекцию</a>
+    {% endif %}
+    
+    {% for razdel in razdels %}
+        <p>
+            <a href="{{ path('razdel_lections', {'id': razdel.id}) }}">{{ razdel.name }}</a>
+        </p>
+    {% endfor %}
+
+{% endblock %}

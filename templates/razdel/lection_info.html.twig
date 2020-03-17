@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RazdelController!{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_lection_delete', {'id': lection.id}) }}" class="btn btn-danger">Удалить лекцию</a>
+    {% endif %}
+
+    <p>Лекция: {{ lection.name }}</p>
+
+    {% if lection.videoLink %}
+        <div class="video">
+            <h3>Видео:</h3>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ lection.videoLink }}"
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    {% endif %}
+
+    {% if lection.materials.count %}
+        <div class="lections">
+            <h3>Материалы для лекции:</h3>
+            <ul>
+                {% for mat in lection.materials %}
+                    <a href="{{ asset('files/' ~ mat.fileName) }}">{{ mat.name }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+
+    
+
+
+{% endblock %}
