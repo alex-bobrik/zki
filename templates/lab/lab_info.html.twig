@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LabController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_labs_delete', {'id': lab.id}) }}" class="btn btn-danger">Удалить лабораторную</a>
+        {% endif %}
+
+        <div class="lab">
+            <p>Lab name: {{ lab.name }}</p>
+
+            {% if lab.videoLink %}
+                <div class="video">
+                    <h3>Видео:</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ lab.videoLink }}"
+                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            {% endif %}
+
+            {% for material in lab.labMaterials %}
+                <a href="{{ asset('files/' ~ material.fileName) }}">{{ material.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

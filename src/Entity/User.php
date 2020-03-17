@@ -50,9 +50,15 @@ class User implements UserInterface
      */
     private $testResults;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LabResult", mappedBy="user")
+     */
+    private $labResults;
+
     public function __construct()
     {
         $this->testResults = new ArrayCollection();
+        $this->labResults = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($testResult->getStudents() === $this) {
                 $testResult->setStudents(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LabResult[]
+     */
+    public function getLabResults(): Collection
+    {
+        return $this->labResults;
+    }
+
+    public function addLabResult(LabResult $labResult): self
+    {
+        if (!$this->labResults->contains($labResult)) {
+            $this->labResults[] = $labResult;
+            $labResult->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLabResult(LabResult $labResult): self
+    {
+        if ($this->labResults->contains($labResult)) {
+            $this->labResults->removeElement($labResult);
+            // set the owning side to null (unless already changed)
+            if ($labResult->getUser() === $this) {
+                $labResult->setUser(null);
             }
         }
 
