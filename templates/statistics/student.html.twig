@@ -1,0 +1,63 @@
+{% extends 'teacher_base.html.twig' %}
+
+{% block title %}Hello StatisticsController!{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="student">
+    <p>Студент {{ student.fullName }}</p>
+</div>
+    <div class="row">
+        <div class="tests col-6">
+            <p>Результаты тестов</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Название теста</th>
+                        <th scope="col">Начало - Окончание</th>
+                        <th scope="col">Результат</th>
+                        <th scope="col">Статус</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for testRes in testStats %}
+                    <tr>
+                        <td>{{ testRes.tests.name }}</td>
+                        <td>{{ testRes.startDate.format('d.m.Y h:i:s') }} -
+                            {% if testRes.endDate %}
+                                {{ testRes.endDate.format('d.m.Y h:i:s') }}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        </td>
+                        <td>{{ ((testRes.correctQuestions * 10)/(testRes.tests.testQuestions.count))|round(2, 'ceil') }}</td>
+                        <td>
+                            {% if not testRes.endDate %}
+                                Не завершен
+                            {% else %}
+                                Завершен
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="labs col-6">
+
+            {% if labStats %}
+{#                <p>Сдано лабораторных: {{ labStats.count }}</p>#}
+                    {% for labResult in labStats %}
+                        <p>{{ labResult.lab.name }}</p>
+                    {% endfor %}
+            {% else %}
+                <p>Не сдано ни одной лабораторной</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

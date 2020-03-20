@@ -4,7 +4,11 @@
 namespace App\Service;
 
 
+use App\Entity\LabMaterial;
+use App\Entity\LabResult;
+use App\Entity\TestResult;
 use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -40,5 +44,23 @@ class UserService
     {
         $this->em->persist($user);
         $this->em->flush();
+    }
+
+//    /**
+//     * @param User $user
+//     * @return Collection|LabResult[]
+//     */
+    public function getStudentLabsStats(User $user): array
+    {
+        return $this->em->getRepository(LabResult::class)->findBy(['user' => $user]);
+    }
+
+//    /**
+//     * @param User $user
+//     * @return Collection|TestResult[]
+//     */
+    public function getStudentTestsStats(User $user): array
+    {
+        return $this->em->getRepository(TestResult::class)->findBy(['students' => $user]);
     }
 }

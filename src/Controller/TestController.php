@@ -84,7 +84,7 @@ class TestController extends AbstractController
         }
 
         if ($testRes->getEndDate() != null) {
-            throw new AccessDeniedException('test is end');
+            return $this->redirectToRoute('student_test_result', ['id' => $testRes->getId()]);
         }
 
         $currentQuestion = $testService->getCurrentQuestion($testRes);
@@ -106,6 +106,7 @@ class TestController extends AbstractController
             if (!($testService->getQuestionsAmount($testRes) === $testRes->getCurrentQuestionNumber() + 1)) {
                 $testService->setNextQuestion($testRes);
             } else {
+                $testService->setNextQuestion($testRes);
                 $testService->endTest($testRes);
             }
 
@@ -142,6 +143,21 @@ class TestController extends AbstractController
         return $this->render('test/new.html.twig', [
             'controller_name' => 'TestController',
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/student/test/result/{id}", name="student_test_result")
+     * @param int $id
+     * @return Response
+     */
+    public function testResult(int $id)
+    {
+        $testResult = $this->getDoctrine()->getRepository(TestResult::class)->find($id);
+
+        return $this->render('test/result.html.twig', [
+            'controller_name' => 'TestController',
+            'testResult' => $testResult,
         ]);
     }
 }

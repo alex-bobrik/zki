@@ -59,14 +59,9 @@ class TestService
 
     public function endTest(TestResult $testResult)
     {
-        $result = (($testResult->getCorrectQuestions() + 1) * 10) / $this->getQuestionsAmount($testResult);
+        $result = ($testResult->getCorrectQuestions() * 10) / ($testResult->getTests()->getTestQuestions()->count());
+
         $date = new \DateTime('now');
-//        $date = $date->format('d.m.Y H:i:s');
-//        $testResult->setResult($result);
-//        $testResult->setEndDate(new \DateTime('now'));
-//
-//        $this->em->persist($testResult);
-//        $this->em->flush();
 
         $qb = $this->em->getRepository(TestResult::class)
             ->createQueryBuilder('tr')

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+
+    <style>
+        .container > div {
+            margin: 30px;
+            display: block;
+        }
+
+        .container > div > a {
+            display: block;
+        }
+
+
+    </style>
+
+    <div class="container">
+        <div>
+            <a href="{{ path('admin_lection_new') }}" class="btn btn-primary">Добавить лекцию</a>
+        </div>
+        <div>
+            <a href="{{ path('admin_lab_new') }}" class="btn btn-primary">Добавить лабораторную</a>
+        </div>
+        <div>
+            <a href="{{ path('admin_razdel_new') }}" class="btn btn-primary">Добавить новый раздел</a>
+        </div>
+        <div>
+            <a href="{{ path('admin_lab_complete') }}" class="btn btn-primary">Засчитать лабораторную</a>
+        </div>
+    </div>
+{% endblock %}
