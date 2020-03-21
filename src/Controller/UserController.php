@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/admin/students", name="admin_students")
+     * @Route("/teacher/students", name="admin_students")
      */
     public function index()
     {
@@ -27,7 +27,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/students/new", name="admin_students_new")
+     * @Route("/teacher/students/new", name="admin_students_new")
      * @param Request $request
      * @param UserService $userService
      * @return Response
@@ -54,7 +54,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/students/edit/{id}", name="admin_students_edit")
+     * @Route("/teacher/students/edit/{id}", name="admin_students_edit")
      * @param Request $request
      * @param UserService $userService
      * @param int $id

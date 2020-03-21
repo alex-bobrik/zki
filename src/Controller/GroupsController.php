@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupsController extends AbstractController
 {
     /**
-     * @Route("/admin/groups", name="admin_groups")
+     * @Route("/teacher/groups", name="admin_groups")
      */
     public function index(EntityManagerInterface $em)
     {
@@ -25,7 +25,7 @@ class GroupsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/groups/new", name="admin_groups_new")
+     * @Route("/teacher/groups/new", name="admin_groups_new")
      */
     public function newGroup(Request $request, EntityManagerInterface $em)
     {
@@ -49,7 +49,7 @@ class GroupsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/groups/edit/{id}", name="admin_groups_edit", requirements={"id"="\d+"})
+     * @Route("/teacher/groups/edit/{id}", name="admin_groups_edit", requirements={"id"="\d+"})
      */
     public function editGroup(Request $request, EntityManagerInterface $em, int $id)
     {

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/admin/questions", name="admin_questions")
+     * @Route("/teacher/questions", name="admin_questions")
      */
     public function index()
     {
@@ -25,7 +25,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/admin/questions/new", name="admin_questions_new")
+     * @Route("/teacher/questions/new", name="admin_questions_new")
      * @param Request $request
      * @param TestService $testService
      * @return \Symfony\Component\HttpFoundation\Response

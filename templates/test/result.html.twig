@@ -1,25 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'student_base.html.twig' %}
 
 {% block title %}Hello TestController!{% endblock %}
 
 {% block body %}
 
-    <div class="test-results">
-        <h2>Тест {{ testResult.tests.name }} завершен</h2>
-        <hr>
-        <h3>Начало теста: {{ testResult.startDate.format('H.m.Y h:i:s') }}</h3>
-        <h3>Конец теста: {{ testResult.endDate.format('H.m.Y h:i:s') }}</h3>
-        <hr>
-        <h3>Всего вопросов: {{ testResult.tests.testQuestions.count }}</h3>
-        <h3>Правильных ответов: {{ testResult.correctQuestions }}</h3>
-        <h3>Отметка не оч: {{ testResult.result }}</h3>
-        <h3>Отметка в твиге: {{ (testResult.correctQuestions * 10) / (testResult.tests.testQuestions.count) }}</h3>
+    <style>
+        .container > div {
+            margin: 20px;
+        }
+    </style>
 
-        <br>
-        <br>
-        <br>
-
-        questions amount: {{ testResult.tests.testQuestions.count }}
-        correct questions: {{ testResult.correctQuestions }}
+    <div class="container">
+        <div>
+            <h2>Тест <i>{{ testResult.tests.name }}</i> пройден</h2>
+        </div>
+        <div>
+            <h3>Начало теста: {{ testResult.startDate.format('d.m.Y H:i:s') }}</h3>
+            <h3>Конец теста: {{ testResult.endDate.format('d.m.Y H:i:s') }}</h3>
+        </div>
+        <div>
+            <h3>Всего вопросов: {{ testResult.tests.testQuestions.count }}</h3>
+            <h3>Правильных ответов: {{ testResult.correctQuestions }}</h3>
+        </div>
+        <div>
+            <h2>Результат: {{ (testResult.correctQuestions * 10) / (testResult.tests.testQuestions.count) }}</h2>
+        </div>
+        <div>
+            <a href="{{ path('student_test') }}" class="btn btn-primary">Все тесты</a>
+        </div>
     </div>
 {% endblock %}

@@ -4,9 +4,23 @@
 
 {% block body %}
 
-    {% for test in tests %}
-        <p>Name: {{ test.name }}</p>
-        <a href="{{ path('student_test_pass', {'id': test.id}) }}">Pass test</a>
-    {% endfor %}
-
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Тест</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for test in tests %}
+                <tr>
+                    <td>{{ test.name }}</td>
+                    <td>
+                        <a href="{{ path('student_test_pass', {'id': test.id}) }}" class="btn btn-primary">Пройти тест</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

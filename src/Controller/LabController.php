@@ -46,7 +46,7 @@ class LabController extends AbstractController
     }
 
     /**
-     * @Route("/admin/labs/new", name="admin_lab_new")
+     * @Route("/teacher/labs/new", name="admin_lab_new")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
@@ -108,7 +108,7 @@ class LabController extends AbstractController
     }
 
     /**
-     * @Route("/admin/labs/delete/{id}", name="admin_labs_delete", requirements={"id"="\d+"})
+     * @Route("/teacher/labs/delete/{id}", name="admin_labs_delete", requirements={"id"="\d+"})
      * @param int $id
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -124,7 +124,7 @@ class LabController extends AbstractController
     }
 
     /**
-     * @Route("/admin/labs/complete", name="admin_lab_complete", requirements={"id"="\d+"})
+     * @Route("/teacher/labs/complete", name="admin_lab_complete", requirements={"id"="\d+"})
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response

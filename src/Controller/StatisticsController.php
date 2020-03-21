@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StatisticsController extends AbstractController
 {
     /**
-     * @Route("/admin/stats/groups", name="admin_stats_between")
+     * @Route("/teacher/stats/groups", name="admin_stats_between")
      */
     public function statsAllGroups(StatsService $service)
     {
@@ -58,7 +58,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/stats/groups/{id}", name="admin_stats_group", requirements={"id"="\d+"})
+     * @Route("/teacher/stats/groups/{id}", name="admin_stats_group", requirements={"id"="\d+"})
      */
     public function groupStats(StatsService $service, int $id)
     {
@@ -104,7 +104,7 @@ class StatisticsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/stats/student/{id}", name="admin_stats_student", requirements={"id"="\d+"})
+     * @Route("/teacher/stats/student/{id}", name="admin_stats_student", requirements={"id"="\d+"})
      * @param int $id
      * @param UserService $userService
      * @return \Symfony\Component\HttpFoundation\Response

@@ -57,7 +57,7 @@ class RazdelController extends AbstractController
     }
 
     /**
-     * @Route("/admin/razdel/new", name="admin_razdel_new")
+     * @Route("/teacher/razdel/new", name="admin_razdel_new")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
@@ -83,7 +83,7 @@ class RazdelController extends AbstractController
     }
 
     /**
-     * @Route("/admin/razdel/edit/{id}", name="admin_razdel_edit", requirements={"id"="\d+"})
+     * @Route("/teacher/razdel/edit/{id}", name="admin_razdel_edit", requirements={"id"="\d+"})
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param int $id
@@ -110,7 +110,7 @@ class RazdelController extends AbstractController
     }
 
     /**
-     * @Route("/admin/razdel/delete/{id}", name="admin_razdel_delete", requirements={"id"="\d+"})
+     * @Route("/teacher/razdel/delete/{id}", name="admin_razdel_delete", requirements={"id"="\d+"})
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param int $id

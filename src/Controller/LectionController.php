@@ -20,36 +20,8 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class LectionController extends AbstractController
 {
-//    /**
-//     * @Route("/admin/lection", name="admin_lection")
-//     */
-//    public function index()
-//    {
-//        $lections = $this->getDoctrine()->getRepository(Lection::class)->findAll();
-//
-//        return $this->render('lection/new.html.twig', [
-//            'controller_name' => 'LectionController',
-//            'lections' => $lections,
-//        ]);
-//    }
-
-//    /**
-//     * @Route("/admin/lection/{id}", name="lection_info", requirements={"id"="\d+"})
-//     * @param int $id
-//     * @return Response
-//     */
-//    public function lectionInfo(int $id)
-//    {
-//        $lection = $this->getDoctrine()->getRepository(Lection::class)->find($id);
-//
-//        return $this->render('lection/info.html.twig', [
-//            'controller_name' => 'LectionController',
-//            'lection' => $lection,
-//        ]);
-//    }
-
     /**
-     * @Route("/admin/lection/new", name="admin_lection_new")
+     * @Route("/teacher/lection/new", name="admin_lection_new")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
@@ -112,7 +84,7 @@ class LectionController extends AbstractController
     }
 
     /**
-     * @Route("/admin/lection/delete/{id}", name="admin_lection_delete", requirements={"id"="\d+"})
+     * @Route("/teacher/lection/delete/{id}", name="admin_lection_delete", requirements={"id"="\d+"})
      * @param int $id
      * @param EntityManagerInterface $em
      * @return RedirectResponse
@@ -128,7 +100,7 @@ class LectionController extends AbstractController
     }
 
     /**
-     * @Route("/admin/lection/change/{id}", name="admin_lection_change", requirements={"id"="\d+"})
+     * @Route("/teacher/lection/change/{id}", name="admin_lection_change", requirements={"id"="\d+"})
      * @param int $id
      * @param EntityManagerInterface $em
      * @return RedirectResponse

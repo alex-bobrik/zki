@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
     /**
-     * @Route("/admin/test", name="admin_test")
+     * @Route("/teacher/test", name="admin_test")
      * @param Request $request
      * @param TestService $testService
      * @return Response
@@ -35,7 +35,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/admin/test/{id}", name="admin_test_info", requirements={"id"="\d+"})
+     * @Route("/teacher/test/{id}", name="admin_test_info", requirements={"id"="\d+"})
      * @param Request $request
      * @param TestService $testService
      * @return Response
@@ -51,7 +51,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/admin/test/delete/{id}", name="admin_test_delete", requirements={"id"="\d+"})
+     * @Route("/teacher/test/delete/{id}", name="admin_test_delete", requirements={"id"="\d+"})
      * @param Request $request
      * @param TestService $testService
      * @return Response
@@ -158,7 +158,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/admin/test/new", name="admin_test_new")
+     * @Route("/teacher/test/new", name="admin_test_new")
      * @param Request $request
      * @param TestService $testService
      * @return Response
