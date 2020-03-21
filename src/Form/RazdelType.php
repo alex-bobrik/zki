@@ -14,8 +14,18 @@ class RazdelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('submit', SubmitType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Раздел',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Сохранить',
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]
+            ])
         ;
     }
 

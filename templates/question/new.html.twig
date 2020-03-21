@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'teacher_base.html.twig' %}
 
 {% block title %}Hello QuestionController!{% endblock %}
 
@@ -10,10 +10,19 @@
         <div class="question-block">
             <div>
                 <div>
-                    {{ form_row(form.name) }}
+                    {{ form_row(form.name, {
+                        'attr': {
+                            'placeholder': 'Вопрос',
+                        }
+                    }) }}
                 </div>
-
-                <div class="answers-block">
+                <div class="add-answer-block">
+                    <button type="button"
+                            class="add-another-collection-widget btn btn-primary"
+                            data-list-selector="#type-fields-list">Добавить ответ
+                    </button>
+                </div>
+                <div class="answers-block col-md-6">
                     <ul class="list-group">
                         <ul id="type-fields-list" class="list-group"
                             data-prototype="{{ form_widget(form.answers.vars.prototype)|e('html_attr') }}"
@@ -27,12 +36,7 @@
                             {% endfor %}
                         </ul>
 
-                        <div class="add-answer-block">
-                            <button type="button"
-                                    class="add-another-collection-widget btn btn-info"
-                                    data-list-selector="#type-fields-list">Add answer
-                            </button>
-                        </div>
+
                     </ul>
                 </div>
             </div>
@@ -40,9 +44,9 @@
 
         <div class="submit-block">
             {{ form_widget(form.submit, {
-                'attr': {'class': 'btn btn-success'},
+                'label': 'Сохранить вопрос',
+                'attr': {'class': 'btn btn-primary'},
             }) }}
-            <a href="{{ path('admin_students') }}" class="btn btn-outline-dark">Back</a>
         </div>
     </div>
 

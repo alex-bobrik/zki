@@ -7,6 +7,7 @@ use App\Entity\TestResult;
 use App\Form\QuestionType;
 use App\Form\TestType;
 use App\Service\TestService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,6 +35,38 @@ class TestController extends AbstractController
     }
 
     /**
+     * @Route("/admin/test/{id}", name="admin_test_info", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param TestService $testService
+     * @return Response
+     */
+    public function testInfo(int $id)
+    {
+        $test = $this->getDoctrine()->getRepository(Test::class)->find($id);
+
+        return $this->render('test/info.html.twig', [
+            'controller_name' => 'TestController',
+            'test' => $test,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/test/delete/{id}", name="admin_test_delete", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param TestService $testService
+     * @return Response
+     */
+    public function deleteTest(int $id, EntityManagerInterface $em)
+    {
+        $test = $this->getDoctrine()->getRepository(Test::class)->find($id);
+
+        $em->remove($test);
+        $em->flush();
+
+        return  $this->redirectToRoute('admin_test');
+    }
+
+    /**
      * @Route("/student/test", name="student_test")
      * @param Request $request
      * @param TestService $testService
@@ -42,6 +75,10 @@ class TestController extends AbstractController
     public function studentTest()
     {
         $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
+
+        if ($this->getUser()->getRoles()[0] == 'ROLE_ADMIN') {
+            return $this->redirectToRoute('admin_test');
+        }
 
         return $this->render('test/student_index.html.twig', [
             'controller_name' => 'TestController',

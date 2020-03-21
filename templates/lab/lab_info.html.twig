@@ -11,7 +11,7 @@
         {% endif %}
 
         <div class="lab">
-            <p>Lab name: {{ lab.name }}</p>
+            <p>Лабораторная: {{ lab.name }}</p>
 
             {% if lab.videoLink %}
                 <div class="video">
@@ -22,9 +22,13 @@
                 </div>
             {% endif %}
 
-            {% for material in lab.labMaterials %}
-                <a href="{{ asset('files/' ~ material.fileName) }}">{{ material.name }}</a>
-            {% endfor %}
+            {% if lab.labMaterials %}
+                <h3>Материалы лабораторной:</h3>
+                {% for material in lab.labMaterials %}
+                    <a href="{{ asset('files/' ~ material.fileName) }}">{{ material.name }}</a>
+                {% endfor %}
+            {% endif %}
+
         </div>
     </div>
 

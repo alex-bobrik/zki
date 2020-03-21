@@ -1,0 +1,61 @@
+{% extends 'teacher_base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <style>
+        .test-end {
+            color: green;
+        }
+
+        .test-not-end {
+            color: red;
+        }
+    </style>
+
+    <div>
+        <p>Тест: {{ test.name }}</p>
+    </div>
+
+    <div>
+        <p>Прохождение теста:</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Студент</th>
+                <th scope="col">Начало - Окончание</th>
+                <th scope="col">Результат</th>
+                <th scope="col">Статус</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for testRes in test.testResults %}
+                <tr>
+                    <td>{{ testRes.students.fullName }}</td>
+                    <td>{{ testRes.startDate.format('d.m.Y H:i:s') }} -
+                        {% if testRes.endDate %}
+                            {{ testRes.endDate.format('d.m.Y H:i:s') }}
+                        {% else %}
+                            ...
+                        {% endif %}
+                    </td>
+                    <td>{{ ((testRes.correctQuestions * 10)/(testRes.tests.testQuestions.count))|round(2, 'ceil') }}</td>
+                    <td>
+                        {% if not testRes.endDate %}
+                            <p class="test-not-end">Не завершен</p>
+                        {% else %}
+                            <p class="test-end">Завершен</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

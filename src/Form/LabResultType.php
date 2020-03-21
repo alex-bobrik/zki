@@ -19,6 +19,7 @@ class LabResultType extends AbstractType
         $builder
             ->add('lab', EntityType::class, [
                 'class' => Lab::class,
+                'label' => 'Лабораторная',
                 'choice_label' => 'name',
                 'mapped' => true,
                 'multiple' => false,
@@ -26,6 +27,7 @@ class LabResultType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
+                'label' => 'Студент',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.username != :u_username')
@@ -36,7 +38,12 @@ class LabResultType extends AbstractType
                 'multiple' => false,
                 'attr' => ['class'=> 'form-control']
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Сохранить',
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]
+            ])
         ;
     }
 

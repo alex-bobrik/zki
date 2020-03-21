@@ -130,32 +130,6 @@ class TestService
             ->getQuery()
             ->execute();
     }
-
-    public function checkIsEqualQuestions(array $current, array $student): bool
-    {
-//        $testResult = $this->em->getRepository(TestResult::class)->find($testResId);
-//
-//        $correctQuestion = $testResult->getTests()->getTestQuestions()[$testResult->getCurrentQuestionNumber()]->getQuestions();
-//
-//        $correctAnswers = $correctQuestion->getAnswers();
-//        $studentAnswers = $studentQuestion->getAnswers();
-
-            if ($current == $student) {
-                return true;
-            }
-
-        return new JsonResponse('incorrect');
-//        return new JsonResponse($studentAnswers[0]->getName());
-
-        for ($i = 0; $i < count($correctQuestion->getAnswers()); $i++) {
-            if ($correctAnswers[$i]->getIsCorrect() != $studentAnswers[$i]->getIsCorrect()) {
-
-                return false;
-            }
-        }
-
-        return true;
-    }
     
     public function getCorrectArray(Question $question): array
     {

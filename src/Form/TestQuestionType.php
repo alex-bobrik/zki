@@ -17,6 +17,7 @@ class TestQuestionType extends AbstractType
             ->add('questions', EntityType::class, [
                 'class' => Question::class,
                 'choice_label' => 'name',
+                'label' => 'Вопрос',
                 'mapped' => true,
                 'multiple' => false,
                 'attr' => ['class'=> 'form-control']

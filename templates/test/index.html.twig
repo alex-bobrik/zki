@@ -1,11 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'teacher_base.html.twig' %}
 
 {% block title %}Hello TestController!{% endblock %}
 
 {% block body %}
 
-    {% for test in tests %}
-        <p>Name: {{ test.name }}</p>
-    {% endfor %}
+    <div class="container">
+        <a href="{{ path('admin_test_new') }}" class="btn btn-primary">Новый тест</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Тест</th>
+                    <th scope="col">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for test in tests %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_test_info', {'id': test.id}) }}">{{ test.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_test_delete', {'id': test.id}) }}">Удалить</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

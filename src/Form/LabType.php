@@ -15,9 +15,12 @@ class LabType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Лабораторная',
+            ])
             ->add('videoLink', TextType::class, [
                 'required' => false,
+                'label' => 'Ссылка на видео',
             ])
             ->add('labMaterials', CollectionType::class, [
                 'entry_type' => LabMaterialType::class,
@@ -30,7 +33,9 @@ class LabType extends AbstractType
                 'required' => true,
                 'label' => false,
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Сохранить',
+            ])
         ;
     }
 

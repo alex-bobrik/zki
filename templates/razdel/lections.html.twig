@@ -5,21 +5,16 @@
 {% block body %}
 
     <div class="container">
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}">Изменить название раздела</a>
-            <br>
-            <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}">Удалить раздел</a>
-            <br>
-        {% endif %}
-
         <h3>Раздел: {{ razdel.name }}</h3>
 
-        <table>
+        <table class="table">
             <thead>
+            <tr>
                 <th scope="col">Лекции</th>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <th scope="col">Статус</th>
-                {% endif %}
+
+                <th scope="col">Статус</th>
+
+            </tr>
             </thead>
             <tbody>
             {% for lection in razdel.lections %}
@@ -47,6 +42,13 @@
             {% endfor %}
             </tbody>
         </table>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}" class="btn btn-primary">Изменить название раздела</a>
+            <br>
+            <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}" class="btn btn-danger">Удалить раздел</a>
+            <br>
+        {% endif %}
     </div>
 
 {% endblock %}

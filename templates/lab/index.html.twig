@@ -5,9 +5,13 @@
 {% block body %}
 
     <div class="container">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_lab_new') }}" class="btn btn-primary">Новая лабораторная</a>
+
+        {% endif %}
+
         {% for lab in labs %}
             <div class="lab">
-{#                <p>{{ lab.name }}</p>#}
                 <a href="{{ path('lab_info', {'id': lab.id}) }}">{{ lab.name }}</a>
             </div>
         {% endfor %}

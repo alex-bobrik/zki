@@ -27,7 +27,7 @@ class LectionController extends AbstractController
 //    {
 //        $lections = $this->getDoctrine()->getRepository(Lection::class)->findAll();
 //
-//        return $this->render('lection/index.html.twig', [
+//        return $this->render('lection/new.html.twig', [
 //            'controller_name' => 'LectionController',
 //            'lections' => $lections,
 //        ]);

@@ -24,12 +24,12 @@ class Test
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TestResult", mappedBy="tests")
+     * @ORM\OneToMany(targetEntity="App\Entity\TestResult", mappedBy="tests", orphanRemoval=true, cascade={"persist"})
      */
     private $testResults;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TestQuestion", mappedBy="tests", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\TestQuestion", mappedBy="tests", cascade={"persist"}, orphanRemoval=true)
      */
     private $testQuestions;
 

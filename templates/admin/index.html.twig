@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'teacher_base.html.twig' %}
 
 {% block title %}Hello AdminController!{% endblock %}
 
@@ -14,7 +14,6 @@
             display: block;
         }
 
-
     </style>
 
     <div class="container">
@@ -29,6 +28,9 @@
         </div>
         <div>
             <a href="{{ path('admin_lab_complete') }}" class="btn btn-primary">Засчитать лабораторную</a>
+        </div>
+        <div>
+            <a href="{{ path('student_account_password-edit') }}" class="btn btn-primary">Изменить пароль</a>
         </div>
     </div>
 {% endblock %}

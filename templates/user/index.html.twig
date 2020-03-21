@@ -4,27 +4,33 @@
 
 {% block body %}
 
-    <table>
-        <thead>
+    <div class="container">
+        <a href="{{ path('admin_students_new') }}" class="btn btn-primary">Добавить студента</a>
+        <table class="table">
+            <thead>
             <tr>
-                <th scope="col">User name</th>
-                <th scope="col">Full name</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Группа</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            {% if user.roles[0] != 'ROLE_ADMIN' %}
-                <tr>
-                    <td>
-                        <a href="{{ path('admin_students_info', {'id': user.id}) }}">
-                            {{ user.username }}
-                        </a>
-                    </td>
-                    <td>{{ user.fullName }}</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                {% if user.roles[0] != 'ROLE_ADMIN' %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('admin_stats_student', {'id': user.id}) }}">
+                                {{ user.fullName }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ user.groups.name }}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 
 {% endblock %}

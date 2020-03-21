@@ -21,18 +21,27 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ path('razdel') }}">Студенты</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin') }}">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('lab') }}">Тесты</a>
+                            <a class="nav-link" href="{{ path('razdel') }}">Лекции</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('student_test') }}">Статистика</a>
+                            <a class="nav-link" href="{{ path('admin_students') }}">Студенты</a>
                         </li>
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="{{ path('student_account') }}">Профиль</a>#}
-{#                        </li>#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_groups') }}">Группы</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_test') }}">Тесты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_stats_between') }}">Статистика</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Выход</a>
+                        </li>
                     </ul>
                 </div>
             </nav>

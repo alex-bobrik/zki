@@ -50,7 +50,9 @@ class LectionType extends AbstractType
                 'required' => true,
                 'label' => false,
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Сохранить',
+            ])
         ;
     }
 

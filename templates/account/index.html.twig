@@ -4,7 +4,93 @@
 
 {% block body %}
 
-    <p>Name: {{ student.fullName }}</p>
-    <p>UsName: {{ student.username }}</p>
+    <style>
+        .test-end {
+            color: green;
+        }
+
+        .test-not-end {
+            color: red;
+        }
+
+        .student {
+            margin: 20px;
+            text-align: center;
+        }
+    </style>
+
+    <div class="container">
+
+        <div class="student">
+            <p class="student-name">Студент {{ student.fullName }}, {{ student.groups.name }}</p>
+            <p>
+                <a href="{{ path('student_account_password-edit') }}" class="btn btn-primary">Изменить пароль</a>
+            </p>
+        </div>
+
+        <div id="div_chart"></div>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            {{ gc_draw(chart, 'div_chart') }}
+        </script>
+
+        <div class="row">
+            <div class="tests col-6">
+                <p>Результаты тестов</p>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Название теста</th>
+                        <th scope="col">Начало - Окончание</th>
+                        <th scope="col">Результат</th>
+                        <th scope="col">Статус</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for testRes in testStats %}
+                        <tr>
+                            <td>{{ testRes.tests.name }}</td>
+                            <td>{{ testRes.startDate.format('d.m.Y H:i:s') }} -
+                                {% if testRes.endDate %}
+                                    {{ testRes.endDate.format('d.m.Y H:i:s') }}
+                                {% else %}
+                                    ...
+                                {% endif %}
+                            </td>
+                            <td>{{ ((testRes.correctQuestions * 10)/(testRes.tests.testQuestions.count))|round(2, 'ceil') }}</td>
+                            <td>
+                                {% if not testRes.endDate %}
+                                    <p class="test-not-end">Не завершен</p>
+                                {% else %}
+                                    <p class="test-end">Завершен</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="labs col-6">
+
+                {% if labStats %}
+                    <p>Сдано лабораторных: {{ labStats|length }}</p>
+                    <hr>
+                    {% for labResult in labStats %}
+                        <p>{{ labResult.lab.name }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>Не сдано ни одной лабораторной</p>
+                {% endif %}
+            </div>
+        </div>
+
+
+
+
+
+    </div>
 
 {% endblock %}

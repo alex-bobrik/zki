@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Test;
 use App\Entity\User;
 use App\Form\PasswordFormType;
+use App\Service\StatsService;
 use App\Service\UserService;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,16 +19,58 @@ class AccountController extends AbstractController
     /**
      * @Route("/account", name="student_account")
      */
-    public function index()
+    public function index(StatsService $service, UserService $userService)
     {
         $userName = $this->getUser()->getUsername();
 
-        $student = $this->getDoctrine()->getRepository(User::class)
+        $user = $this->getDoctrine()->getRepository(User::class)
             ->findOneBy(['username' => $userName]);
 
+        if ($user->getRoles()[0] == 'ROLE_ADMIN') {
+            return $this->redirectToRoute('admin_students');
+        }
+
+        $group = $user->getGroups();
+
+        $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
+
+        $header = array();
+        $header[] = 'Тест';
+        $header[] = 'Балл';
+
+        $resArray[] = $header;
+
+        foreach ($tests as $test) {
+            $array = array();
+            $array[] = $test->getName();
+            $array[] = $service->getAvgValueByTestForStudent($group, $test, $user);
+            $resArray[] = $array;
+        }
+
+        $chart = new ColumnChart();
+
+        $chart->getData()->setArrayToDataTable(
+            $resArray
+        );
+
+        $chart->getOptions()->setTitle('Баллы за тесты');
+        $chart->getOptions()->setHeight(500);
+        $chart->getOptions()->setWidth(1000);
+        $chart->getOptions()->getTitleTextStyle()->setBold(true);
+        $chart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $chart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $chart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $chart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        $labStats = $userService->getStudentLabsStats($user);
+        $testStats = $userService->getStudentTestsStats($user);
+
         return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
-            'student' => $student,
+            'controller_name' => 'StatisticsController',
+            'chart' => $chart,
+            'student' => $user,
+            'labStats' => $labStats,
+            'testStats' => $testStats,
         ]);
     }
 

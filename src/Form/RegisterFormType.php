@@ -20,26 +20,32 @@ class RegisterFormType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => 'Username',
+                'label' => 'Логин',
                 'attr' => [
-                    'placeholder' => 'Username',
+                    'placeholder' => 'Логин',
+                    'class' => 'form-control',
                 ]
             ])
             ->add('fullName', TextType::class, [
-                'label' => 'Full Name',
+                'label' => 'ФИО',
                 'attr' => [
-                    'placeholder' => 'Full Name',
+                    'placeholder' => 'ФИО',
+                    'class' => 'form-control',
                 ]
             ])
             ->add('groups', EntityType::class, [
                 'class' => Groups::class,
+                'label' => 'Группа',
                 'choice_label' => 'name',
                 'mapped' => true,
                 'multiple' => false,
                 'attr' => ['class'=> 'form-control']
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Save',
+                'label' => 'Сохранить',
+                'attr' => [
+                    'class' => 'btn btn-primary',
+                ]
             ])
         ;
     }

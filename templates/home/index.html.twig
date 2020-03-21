@@ -4,4 +4,15 @@
 
 {% block body %}
 
+    <div id="div_chart"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(chart, 'div_chart') }}
+    </script>
+
+    <p>Статистика по отдельным группам:</p>
+    {% for group in groups %}
+        <span>{{ group.name }}</span>
+    {% endfor %}
 {% endblock %}

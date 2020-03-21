@@ -1,0 +1,19 @@
+{% extends 'teacher_base.html.twig' %}
+
+{% block title %}Hello StatisticsController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div id="div_chart"></div>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            {{ gc_draw(chart, 'div_chart') }}
+        </script>
+
+        <p>Статистика по отдельным группам:</p>
+        {% for group in groups %}
+            <a href="{{ path('admin_stats_group', {'id': group.id}) }}" class="btn btn-primary">{{ group.name }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}

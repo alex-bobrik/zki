@@ -18,7 +18,7 @@ class AnswerType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'form-control answer-input',
                     'maxLength' => 50,
-                    'placeholder' => 'Answer',
+                    'placeholder' => 'Ответ',
                 ],
                 'label' => false,
             ])

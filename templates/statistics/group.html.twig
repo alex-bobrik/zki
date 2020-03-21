@@ -1,20 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends 'teacher_base.html.twig' %}
 
 {% block title %}Hello StatisticsController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+        <div class="row table">
+            <div class="col-md-6">
+                <div id="div_chart"></div>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <div class="col-4">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Студенты</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for student in students %}
+                        {% if student.roles[0] != 'ROLE_ADMIN' %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('admin_stats_student', {'id': student.id}) }}">{{ student.fullName }}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/zki/src/Controller/StatisticsController.php'|file_link(0) }}">src/Controller/StatisticsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/zki/templates/statistics/index.html.twig'|file_link(0) }}">templates/statistics/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+        </div>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(chart, 'div_chart') }}
+    </script>
 {% endblock %}

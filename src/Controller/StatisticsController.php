@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Groups;
+use App\Entity\Test;
 use App\Entity\User;
+use App\Service\StatsService;
 use App\Service\UserService;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,41 +16,142 @@ class StatisticsController extends AbstractController
     /**
      * @Route("/admin/stats/groups", name="admin_stats_between")
      */
-    public function index()
+    public function statsAllGroups(StatsService $service)
     {
+        $groups = $this->getDoctrine()->getRepository(Groups::class)->findAll();
 
+        $resArray = array();
 
-        return $this->render('statistics/index.html.twig', [
+        $header = array();
+        $header[] = 'Группа';
+        $header[] = 'Ср.балл';
+
+        $resArray[] = $header;
+
+        foreach ($groups as $item) {
+            $array = array();
+            $array[] = $item->getName();
+            $array[] = $service->getAvgValueInGroupByTests($item);
+            $resArray[] = $array;
+        }
+
+        $chart = new ColumnChart();
+
+        $chart->getData()->setArrayToDataTable(
+            $resArray
+        );
+
+        $chart->getOptions()->setTitle('Средний балл за тесты по группам');
+        $chart->getOptions()->setHeight(500);
+        $chart->getOptions()->setWidth(900);
+        $chart->getOptions()->getTitleTextStyle()->setBold(true);
+        $chart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $chart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $chart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $chart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        return $this->render('statistics/between-groups.html.twig', [
             'controller_name' => 'StatisticsController',
+            'chart' => $chart,
+            'groups' => $groups,
         ]);
     }
 
     /**
-     * @Route("/admin/stats/group/{id}", name="admin_stats_group")
+     * @Route("/admin/stats/groups/{id}", name="admin_stats_group", requirements={"id"="\d+"})
      */
-    public function groupStats()
+    public function groupStats(StatsService $service, int $id)
     {
+        $group = $this->getDoctrine()->getRepository(Groups::class)->find($id);
+
+        $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
+
+        $students = $group->getUsers();
+
+        $header = array();
+        $header[] = 'Тест';
+        $header[] = 'Ср.балл';
+
+        $resArray[] = $header;
+
+        foreach ($tests as $test) {
+            $array = array();
+            $array[] = $test->getName();
+            $array[] = $service->getAvgValueByTest($group, $test);
+            $resArray[] = $array;
+        }
+
+        $chart = new ColumnChart();
+
+        $chart->getData()->setArrayToDataTable(
+            $resArray
+        );
+
+        $chart->getOptions()->setTitle('Средний балл за тесты');
+        $chart->getOptions()->setHeight(500);
+        $chart->getOptions()->setWidth(900);
+        $chart->getOptions()->getTitleTextStyle()->setBold(true);
+        $chart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $chart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $chart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $chart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
         return $this->render('statistics/group.html.twig', [
             'controller_name' => 'StatisticsController',
+            'chart' => $chart,
+            'students' => $students
         ]);
     }
 
     /**
-     * @Route("/admin/stats/student/{id}", name="admin_stats_student")
+     * @Route("/admin/stats/student/{id}", name="admin_stats_student", requirements={"id"="\d+"})
      * @param int $id
      * @param UserService $userService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function studentStats(int $id, UserService $userService)
+    public function studentStats(int $id, StatsService $service, UserService $userService)
     {
-        $student = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
-        $labStats = $userService->getStudentLabsStats($student);
-        $testStats = $userService->getStudentTestsStats($student);
+        $group = $user->getGroups();
+
+        $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
+
+        $header = array();
+        $header[] = 'Тест';
+        $header[] = 'Балл';
+
+        $resArray[] = $header;
+
+        foreach ($tests as $test) {
+            $array = array();
+            $array[] = $test->getName();
+            $array[] = $service->getAvgValueByTestForStudent($group, $test, $user);
+            $resArray[] = $array;
+        }
+
+        $chart = new ColumnChart();
+
+        $chart->getData()->setArrayToDataTable(
+            $resArray
+        );
+
+        $chart->getOptions()->setTitle('Баллы за тесты');
+        $chart->getOptions()->setHeight(500);
+        $chart->getOptions()->setWidth(1000);
+        $chart->getOptions()->getTitleTextStyle()->setBold(true);
+        $chart->getOptions()->getTitleTextStyle()->setColor('#009900');
+        $chart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $chart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $chart->getOptions()->getTitleTextStyle()->setFontSize(20);
+
+        $labStats = $userService->getStudentLabsStats($user);
+        $testStats = $userService->getStudentTestsStats($user);
 
         return $this->render('statistics/student.html.twig', [
             'controller_name' => 'StatisticsController',
-            'student' => $student,
+            'chart' => $chart,
+            'student' => $user,
             'labStats' => $labStats,
             'testStats' => $testStats,
         ]);

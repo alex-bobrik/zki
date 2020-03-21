@@ -29,14 +29,6 @@
     width: 80%;
 }
 
-.add-answer-block {
-    margin-top: 10px;
-}
-
-.add-answer-block > button {
-    float: right;
-}
-
 .submit-block {
     margin-bottom: 30px;
 }

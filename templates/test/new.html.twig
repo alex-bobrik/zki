@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'teacher_base.html.twig' %}
 
 {% block title %}Hello TestController!{% endblock %}
 
@@ -7,7 +7,7 @@
 
     <div class="container">
         <div class="buttons-header">
-            <a href="{{ path('admin_students') }}" class="btn btn-primary">New question</a>
+            <a href="{{ path('admin_questions_new') }}" class="btn btn-primary">Новый вопрос</a>
         </div>
         <div class="question-block">
             <div>
@@ -15,12 +15,17 @@
                     {{ form_row(form.name, {
                         'label': false,
                         'attr': {'class': 'form-control',
-                            'placeholder': 'Quiz',
+                            'placeholder': 'Тест',
                         }
                     }) }}
                 </div>
-
-                <div class="answers-block">
+                <div class="add-answer-block">
+                    <button type="button"
+                            class="add-another-collection-widget btn btn-primary"
+                            data-list-selector="#type-fields-list">Добавить вопрос
+                    </button>
+                </div>
+                <div class="answers-block col-md-6">
                     <ul class="list-group">
                         <ul id="type-fields-list" class="list-group"
                             data-prototype="{{ form_widget(form.testQuestions.vars.prototype)|e('html_attr') }}"
@@ -34,12 +39,7 @@
                             {% endfor %}
                         </ul>
 
-                        <div class="add-answer-block">
-                            <button type="button"
-                                    class="add-another-collection-widget btn btn-info"
-                                    data-list-selector="#type-fields-list">Add question
-                            </button>
-                        </div>
+
                     </ul>
                 </div>
             </div>
@@ -47,9 +47,9 @@
 
         <div class="submit-block">
             {{ form_widget(form.submit, {
-                'attr': {'class': 'btn btn-success'},
+                'label': 'Сохранить',
+                'attr': {'class': 'btn btn-primary'},
             }) }}
-            <a href="{{ path('admin_students') }}" class="btn btn-outline-dark">Back</a>
         </div>
     </div>
 

@@ -53,6 +53,7 @@ class UserService
     public function getStudentLabsStats(User $user): array
     {
         return $this->em->getRepository(LabResult::class)->findBy(['user' => $user]);
+//        dump($this->em->getRepository(LabResult::class)->findBy(['user' => $user])); die;
     }
 
 //    /**
@@ -61,6 +62,7 @@ class UserService
 //     */
     public function getStudentTestsStats(User $user): array
     {
+
         return $this->em->getRepository(TestResult::class)->findBy(['students' => $user]);
     }
 }
