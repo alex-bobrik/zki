@@ -17,13 +17,12 @@ class RazdelType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Раздел',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
-                    'class' => 'btn btn-primary',
                 ]
             ])
         ;

@@ -5,23 +5,23 @@
 {% block body %}
     {{ form_start(form) }}
 
-    <div class="container">
+    <div class="container" style="margin-top: 20px">
         <div class="buttons-header">
-            <a href="{{ path('admin_questions_new') }}" class="btn btn-primary">Новый вопрос</a>
+            <a href="{{ path('admin_questions_new') }}">Новый вопрос</a>
         </div>
         <div class="question-block">
             <div>
                 <div>
                     {{ form_row(form.name, {
                         'label': false,
-                        'attr': {'class': 'form-control',
+                        'attr': {'class': 'form-control shadow-none',
                             'placeholder': 'Тест',
                         }
                     }) }}
                 </div>
                 <div class="add-answer-block">
                     <button type="button"
-                            class="add-another-collection-widget btn btn-primary"
+                            class="add-another-collection-widget"
                             data-list-selector="#type-fields-list">Добавить вопрос
                     </button>
                 </div>
@@ -38,8 +38,6 @@
                                 </li>
                             {% endfor %}
                         </ul>
-
-
                     </ul>
                 </div>
             </div>
@@ -48,7 +46,6 @@
         <div class="submit-block">
             {{ form_widget(form.submit, {
                 'label': 'Сохранить',
-                'attr': {'class': 'btn btn-primary'},
             }) }}
         </div>
     </div>

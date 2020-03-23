@@ -4,10 +4,11 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container" style="margin-top: 20px">
 
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_labs_delete', {'id': lab.id}) }}" class="btn btn-danger">Удалить лабораторную</a>
+            <a href="{{ path('admin_labs_delete', {'id': lab.id}) }}">Удалить лабораторную</a>
+            <hr>
         {% endif %}
 
         <div class="lab">

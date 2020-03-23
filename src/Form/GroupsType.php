@@ -17,14 +17,14 @@ class GroupsType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Группа',
                 'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Группа'
+                    'class' => 'form-control shadow-none',
+                    'placeholder' => 'Группа',
                 ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
-                    'class' => 'btn btn-primary',
+//                    'class' => 'btn btn-primary',
                 ]
             ])
         ;

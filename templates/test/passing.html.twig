@@ -39,7 +39,7 @@
         <div class="container question-text" style="margin: 20px">
             {{ form_widget(form.name, {
                 'label': 'Вопрос',
-                'attr': {'class': 'form-control',
+                'attr': {'class': 'form-control shadow-none',
                     'autocomplete': 'off',
                     'readonly': true,
                 }
@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="container">
-        <input type="button" id="send" value="Ответить" class="btn btn-primary" style="margin: 20px">
+        <input type="button" id="send" value="Ответить" style="margin: 20px">
 {#        <a href="{{ path('student_test_passing',{'testResId': testRes.id}) }}" id="next" class="btn btn-primary">Next >></a>#}
 {#        <input type="submit" value="Nextt" class="btn btn-primary">#}
     </div>

@@ -17,13 +17,12 @@ class PasswordFormType extends AbstractType
             ->add('password', PasswordType::class, [
                 'label' => 'Новый пароль',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
-                    'class' => 'btn btn-primary'
                 ]
             ])
         ;

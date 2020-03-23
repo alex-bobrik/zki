@@ -9,6 +9,7 @@
             <thead>
                 <tr>
                     <th scope="col">Тест</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -16,7 +17,7 @@
                 <tr>
                     <td>{{ test.name }}</td>
                     <td>
-                        <a href="{{ path('student_test_pass', {'id': test.id}) }}" class="btn btn-primary">Пройти тест</a>
+                        <a href="{{ path('student_test_pass', {'id': test.id}) }}">Пройти тест</a>
                     </td>
                 </tr>
             {% endfor %}

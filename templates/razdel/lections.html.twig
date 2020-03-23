@@ -44,9 +44,10 @@
         </table>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}" class="btn btn-primary">Изменить название раздела</a>
+            <hr>
+            <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}">Изменить название раздела</a>
             <br>
-            <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}" class="btn btn-danger">Удалить раздел</a>
+            <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}">Удалить раздел</a>
             <br>
         {% endif %}
     </div>

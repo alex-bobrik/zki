@@ -21,7 +21,7 @@ class LectionType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Название лекции',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('razdel', EntityType::class, [
@@ -30,13 +30,13 @@ class LectionType extends AbstractType
                 'choice_label' => 'name',
                 'mapped' => true,
                 'multiple' => false,
-                'attr' => ['class'=> 'form-control']
+                'attr' => ['class'=> 'form-control shadow-none']
             ])
             ->add('videoLink', TextType::class, [
                 'label' => 'Ссылка на видео',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('materials', CollectionType::class, [

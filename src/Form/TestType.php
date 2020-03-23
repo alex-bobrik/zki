@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Test;
-use App\Form\Quiz\QuizQuestionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,7 +25,7 @@ class TestType extends AbstractType
                 'by_reference' => false,
                 'label' => false,
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Save the quiz'])
+            ->add('submit', SubmitType::class, ['label' => 'Save the test'])
         ;
     }
 

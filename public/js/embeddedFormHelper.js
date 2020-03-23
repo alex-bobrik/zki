@@ -3,7 +3,7 @@ $(document).ready(function () {
     const MAX_ELEMENTS = 10;
 
     function addTagFormDeleteLink(tagFormLi) {
-        let removeFormButton = $('<button type="button" class="btn btn-danger">Удалить</button>');
+        let removeFormButton = $('<button type="button">Удалить</button>');
         $(tagFormLi).append($(removeFormButton));
 
         $(removeFormButton).on('click', function (e) {

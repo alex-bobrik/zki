@@ -13,12 +13,13 @@
                     {{ form_row(form.name, {
                         'attr': {
                             'placeholder': 'Вопрос',
+                            'class': 'form-control shadow-none'
                         }
                     }) }}
                 </div>
                 <div class="add-answer-block">
                     <button type="button"
-                            class="add-another-collection-widget btn btn-primary"
+                            class="add-another-collection-widget"
                             data-list-selector="#type-fields-list">Добавить ответ
                     </button>
                 </div>
@@ -35,8 +36,6 @@
                                 </li>
                             {% endfor %}
                         </ul>
-
-
                     </ul>
                 </div>
             </div>
@@ -45,7 +44,6 @@
         <div class="submit-block">
             {{ form_widget(form.submit, {
                 'label': 'Сохранить вопрос',
-                'attr': {'class': 'btn btn-primary'},
             }) }}
         </div>
     </div>

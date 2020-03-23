@@ -20,7 +20,7 @@ class TestQuestionType extends AbstractType
                 'label' => 'Вопрос',
                 'mapped' => true,
                 'multiple' => false,
-                'attr' => ['class'=> 'form-control']
+                'attr' => ['class'=> 'form-control shadow-none']
             ])
         ;
     }

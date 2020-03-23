@@ -17,7 +17,7 @@ class LabMaterialType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Название документа',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('fileName', FileType::class, [

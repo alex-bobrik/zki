@@ -23,14 +23,14 @@ class RegisterFormType extends AbstractType
                 'label' => 'Логин',
                 'attr' => [
                     'placeholder' => 'Логин',
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('fullName', TextType::class, [
                 'label' => 'ФИО',
                 'attr' => [
                     'placeholder' => 'ФИО',
-                    'class' => 'form-control',
+                    'class' => 'form-control shadow-none',
                 ]
             ])
             ->add('groups', EntityType::class, [
@@ -39,12 +39,12 @@ class RegisterFormType extends AbstractType
                 'choice_label' => 'name',
                 'mapped' => true,
                 'multiple' => false,
-                'attr' => ['class'=> 'form-control']
+                'attr' => ['class'=> 'form-control shadow-none']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
-                    'class' => 'btn btn-primary',
+//                    'class' => 'btn btn-primary',
                 ]
             ])
         ;
