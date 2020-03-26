@@ -23,7 +23,7 @@ class LabResultType extends AbstractType
                 'choice_label' => 'name',
                 'mapped' => true,
                 'multiple' => false,
-                'attr' => ['class'=> 'form-control']
+                'attr' => ['class'=> 'form-control shadow-none']
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
@@ -36,12 +36,11 @@ class LabResultType extends AbstractType
                 'choice_label' => 'fullName',
                 'mapped' => true,
                 'multiple' => false,
-                'attr' => ['class'=> 'form-control']
+                'attr' => ['class'=> 'form-control shadow-none']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
-                    'class' => 'btn btn-primary',
                 ]
             ])
         ;
