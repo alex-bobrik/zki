@@ -26,7 +26,7 @@ class UserService
 
     public function createUser(User $user)
     {
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles(['ROLE_USER']);
         $user->setPassword('1');
         $user->setPassword($this->encodePassword($this->passwordEncoder, $user));
 
