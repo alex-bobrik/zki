@@ -181,7 +181,9 @@ class LabController extends AbstractController
                 ]);
 
             if ($checkLabRes) {
-                throw $this->createAccessDeniedException('Такая лабораторная уже засчитана');
+                $this->addFlash('danger', 'Такая лабораторная уже засчитана');
+                return $this->redirectToRoute('admin_lab_complete');
+
             }
 
             $labResult->setIsComplete(true);
