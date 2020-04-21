@@ -8,7 +8,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Тест</th>
+                    <th scope="col">{{ knp_pagination_sortable(tests, 'Тест', ['t.name']) }}</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -23,5 +23,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="pagination">
+            {{ knp_pagination_render(tests) }}
+        </div>
     </div>
 {% endblock %}

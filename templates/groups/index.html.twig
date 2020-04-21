@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Группа</th>
+            <th scope="col">{{ knp_pagination_sortable(groups, 'Группа', ['g.name']) }}</th>
             <th scope="col">Действия</th>
         </tr>
         </thead>
@@ -25,6 +25,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+        {{ knp_pagination_render(groups) }}
+    </div>
 </div>
 
 

@@ -10,14 +10,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Лекции</th>
+                <th scope="col">{{ knp_pagination_sortable(lections, 'Лекция', ['l.name']) }}</th>
 
                 <th scope="col">Статус</th>
 
             </tr>
             </thead>
             <tbody>
-            {% for lection in razdel.lections %}
+            {% for lection in lections %}
                 <tr>
                     <td>
                         <a href="{{ path('razdel_lection_info', {'lectId': lection.id, 'id': razdel.id}) }}">{{ lection.name }}</a>
@@ -42,6 +42,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="pagination">
+            {{ knp_pagination_render(lections) }}
+        </div>
 
         {% if is_granted('ROLE_ADMIN') %}
             <hr>

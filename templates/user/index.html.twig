@@ -4,12 +4,19 @@
 
 {% block body %}
 
+    <style>
+        .pagination {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+
     <div class="container" style="margin-top: 20px">
         <a href="{{ path('admin_students_new') }}">Добавить студента</a>
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">ФИО</th>
+                <th scope="col">{{ knp_pagination_sortable(users, 'ФИО', ['s.fullName']) }}</th>
                 <th scope="col">Группа</th>
             </tr>
             </thead>
@@ -30,6 +37,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="pagination">
+            {{ knp_pagination_render(users) }}
+        </div>
     </div>
 
 

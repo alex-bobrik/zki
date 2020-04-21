@@ -9,6 +9,7 @@ use App\Entity\Materials;
 use App\Form\LabResultType;
 use App\Form\LabType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,16 @@ class LabController extends AbstractController
     /**
      * @Route("/labs", name="lab")
      */
-    public function index()
+    public function index(PaginatorInterface $paginator, Request $request)
     {
-        $labs = $this->getDoctrine()->getRepository(Lab::class)->findAll();
+        $labsQuery = $this->getDoctrine()->getRepository(Lab::class)
+            ->createQueryBuilder('l');
+
+        $labs = $paginator->paginate(
+            $labsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('lab/index.html.twig', [
             'controller_name' => 'LabController',

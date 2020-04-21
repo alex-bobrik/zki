@@ -17,6 +17,11 @@
             margin: 20px;
             text-align: center;
         }
+
+        .pagination {
+            width: 100%;
+            text-align: center;
+        }
     </style>
 
     <div class="container">
@@ -41,9 +46,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Название теста</th>
-                        <th scope="col">Начало - Окончание</th>
-                        <th scope="col">Результат</th>
+                        <th scope="col">Тест</th>
+                        <th scope="col">{{ knp_pagination_sortable(testStats, 'Начало', ['tr.startDate']) }}</th>
+                        <th scope="col">{{ knp_pagination_sortable(testStats, 'Окончание', ['tr.endDate']) }}</th>
+                        <th scope="col">{{ knp_pagination_sortable(testStats, 'Результат', ['tr.result']) }}</th>
                         <th scope="col">Статус</th>
                     </tr>
                     </thead>
@@ -51,8 +57,15 @@
                     <tbody>
                     {% for testRes in testStats %}
                         <tr>
-                            <td>{{ testRes.tests.name }}</td>
-                            <td>{{ testRes.startDate.format('d.m.Y H:i:s') }} -
+                            <td>
+                                <p style="word-break: break-word">
+                                    {{ testRes.tests.name }}
+                                </p>
+                            </td>
+                            <td>
+                                {{ testRes.startDate.format('d.m.Y H:i:s') }}
+                            </td>
+                            <td>
                                 {% if testRes.endDate %}
                                     {{ testRes.endDate.format('d.m.Y H:i:s') }}
                                 {% else %}
@@ -71,6 +84,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="pagination">
+                    {{ knp_pagination_render(testStats) }}
+                </div>
             </div>
 
             <div class="labs col-6">

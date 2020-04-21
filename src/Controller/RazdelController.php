@@ -6,6 +6,7 @@ use App\Entity\Lection;
 use App\Entity\Razdel;
 use App\Form\RazdelType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,13 +32,27 @@ class RazdelController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function lectionsOfRazdel(int $id)
+    public function lectionsOfRazdel(int $id, PaginatorInterface $paginator, Request $request)
     {
         $razdel = $this->getDoctrine()->getRepository(Razdel::class)->find($id);
+
+        $lectionsQuery = $this->getDoctrine()->getRepository(Lection::class)
+            ->createQueryBuilder('l')
+            ->select('l')
+            ->where('l.razdel = :razdel')
+            ->setParameter('razdel', $razdel)
+            ->getQuery();
+
+        $lections = $paginator->paginate(
+            $lectionsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('razdel/lections.html.twig', [
             'controller_name' => 'RazdelController',
             'razdel' => $razdel,
+            'lections' => $lections,
         ]);
     }
 

@@ -15,6 +15,9 @@
                 <a href="{{ path('lab_info', {'id': lab.id}) }}">{{ lab.name }}</a>
             </div>
         {% endfor %}
+        <div class="pagination">
+            {{ knp_pagination_render(labs) }}
+        </div>
     </div>
 
 {% endblock %}

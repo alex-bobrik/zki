@@ -8,6 +8,7 @@ use App\Form\QuestionType;
 use App\Form\TestType;
 use App\Service\TestService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,9 +25,16 @@ class TestController extends AbstractController
      * @param TestService $testService
      * @return Response
      */
-    public function index()
+    public function index(PaginatorInterface $paginator, Request $request)
     {
-        $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
+        $testsQuery = $this->getDoctrine()->getRepository(Test::class)
+            ->createQueryBuilder('t');
+
+        $tests = $paginator->paginate(
+            $testsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
@@ -40,13 +48,27 @@ class TestController extends AbstractController
      * @param TestService $testService
      * @return Response
      */
-    public function testInfo(int $id)
+    public function testInfo(int $id, PaginatorInterface $paginator, Request $request)
     {
         $test = $this->getDoctrine()->getRepository(Test::class)->find($id);
+
+        $testResultsQuery = $this->getDoctrine()->getRepository(TestResult::class)
+            ->createQueryBuilder('tr')
+            ->select('tr')
+            ->where('tr.tests = :test')
+            ->setParameter('test', $test)
+            ->getQuery();
+
+        $testResults = $paginator->paginate(
+            $testResultsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('test/info.html.twig', [
             'controller_name' => 'TestController',
             'test' => $test,
+            'testResults' => $testResults,
         ]);
     }
 
@@ -72,9 +94,16 @@ class TestController extends AbstractController
      * @param TestService $testService
      * @return Response
      */
-    public function studentTest()
+    public function studentTest(PaginatorInterface $paginator, Request $request)
     {
-        $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
+        $testsQuery = $this->getDoctrine()->getRepository(Test::class)
+            ->createQueryBuilder('t');
+
+        $tests = $paginator->paginate(
+            $testsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         if ($this->getUser()->getRoles()[0] == 'ROLE_ADMIN') {
             return $this->redirectToRoute('admin_test');

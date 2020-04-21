@@ -4,7 +4,6 @@
 
 {% block body %}
 
-<div class="container">
 
     <style>
         .test-end {
@@ -14,7 +13,17 @@
         .test-not-end {
             color: red;
         }
+
+        .pagination {
+            width: 100%;
+            text-align: center;
+        }
+
     </style>
+
+<div class="container">
+
+
 
     <div>
         <p>Тест: {{ test.name }}</p>
@@ -26,17 +35,21 @@
             <thead>
             <tr>
                 <th scope="col">Студент</th>
-                <th scope="col">Начало - Окончание</th>
-                <th scope="col">Результат</th>
+                <th scope="col">{{ knp_pagination_sortable(testResults, 'Начало', ['tr.startDate']) }}</th>
+                <th scope="col">{{ knp_pagination_sortable(testResults, 'Окончание', ['tr.endDate']) }}</th>
+                <th scope="col">{{ knp_pagination_sortable(testResults, 'Результат', ['tr.result']) }}</th>
                 <th scope="col">Статус</th>
             </tr>
             </thead>
 
             <tbody>
-            {% for testRes in test.testResults %}
+            {% for testRes in testResults %}
                 <tr>
                     <td>{{ testRes.students.fullName }}</td>
-                    <td>{{ testRes.startDate.format('d.m.Y H:i:s') }} -
+                    <td>
+                        {{ testRes.startDate.format('d.m.Y H:i:s') }}
+                    </td>
+                    <td>
                         {% if testRes.endDate %}
                             {{ testRes.endDate.format('d.m.Y H:i:s') }}
                         {% else %}
@@ -55,6 +68,9 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(testResults) }}
     </div>
 </div>
 

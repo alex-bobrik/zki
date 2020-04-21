@@ -10,6 +10,7 @@ use App\Entity\TestResult;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService
@@ -60,9 +61,14 @@ class UserService
 //     * @param User $user
 //     * @return Collection|TestResult[]
 //     */
-    public function getStudentTestsStats(User $user): array
+    public function getStudentTestsStatsQuery(User $user): Query
     {
 
-        return $this->em->getRepository(TestResult::class)->findBy(['students' => $user]);
+        return $this->em->getRepository(TestResult::class)
+            ->createQueryBuilder('tr')
+            ->select('tr')
+            ->where('tr.students = :student')
+            ->setParameter('student', $user)
+            ->getQuery();
     }
 }

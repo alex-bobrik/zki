@@ -8,6 +8,7 @@ use App\Form\PasswordFormType;
 use App\Service\StatsService;
 use App\Service\UserService;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account", name="student_account")
      */
-    public function index(StatsService $service, UserService $userService)
+    public function index(StatsService $service, UserService $userService, PaginatorInterface $paginator, Request $request)
     {
         $userName = $this->getUser()->getUsername();
 
@@ -63,7 +64,13 @@ class AccountController extends AbstractController
         $chart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
         $labStats = $userService->getStudentLabsStats($user);
-        $testStats = $userService->getStudentTestsStats($user);
+        $testStatsQuery = $userService->getStudentTestsStatsQuery($user);
+
+        $testStats = $paginator->paginate(
+            $testStatsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('account/index.html.twig', [
             'controller_name' => 'StatisticsController',

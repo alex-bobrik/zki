@@ -8,7 +8,9 @@ use App\Entity\User;
 use App\Service\StatsService;
 use App\Service\UserService;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\ColumnChart;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class StatisticsController extends AbstractController
@@ -109,7 +111,7 @@ class StatisticsController extends AbstractController
      * @param UserService $userService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function studentStats(int $id, StatsService $service, UserService $userService)
+    public function studentStats(int $id, StatsService $service, UserService $userService, PaginatorInterface $paginator, Request $request)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
@@ -146,7 +148,13 @@ class StatisticsController extends AbstractController
         $chart->getOptions()->getTitleTextStyle()->setFontSize(20);
 
         $labStats = $userService->getStudentLabsStats($user);
-        $testStats = $userService->getStudentTestsStats($user);
+        $testStatsQuery = $userService->getStudentTestsStatsQuery($user);
+
+        $testStats = $paginator->paginate(
+            $testStatsQuery,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('statistics/student.html.twig', [
             'controller_name' => 'StatisticsController',
