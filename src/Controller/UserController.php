@@ -2,24 +2,47 @@
 
 namespace App\Controller;
 
+use App\Entity\Test;
 use App\Entity\User;
 use App\Form\RegisterFormType;
+use App\Form\SearchType;
 use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/teacher/students", name="admin_students")
      */
-    public function index(PaginatorInterface $paginator, Request $request)
+    public function index(PaginatorInterface $paginator, Request $request, RouterInterface $router)
     {
-        $usersQuery = $this->getDoctrine()->getRepository(User::class)
-            ->createQueryBuilder('s');
+        $q = $request->get('q');
+
+        if ($q) {
+            $usersQuery = $this->getDoctrine()->getRepository(User::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->where('l.fullName like :name')
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery();
+        } else {
+            $usersQuery = $this->getDoctrine()->getRepository(User::class)
+                ->createQueryBuilder('t');
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('admin_students', ['q' => $query]));
+        }
 
         $users = $paginator->paginate(
             $usersQuery,
@@ -30,6 +53,7 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
             'users' => $users,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 

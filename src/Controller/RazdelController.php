@@ -5,25 +5,52 @@ namespace App\Controller;
 use App\Entity\Lection;
 use App\Entity\Razdel;
 use App\Form\RazdelType;
+use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 class RazdelController extends AbstractController
 {
     /**
      * @Route("/razdeli", name="razdel")
      */
-    public function index()
+    public function index(Request $request, RouterInterface $router)
     {
         $razdels = $this->getDoctrine()->getRepository(Razdel::class)->findAll();
+
+        $q = $request->get('q');
+        //dump($q); die;
+
+        $foundLections = null;
+        if ($q) {
+            $foundLections = $this->getDoctrine()->getRepository(Lection::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->where('l.name like :name')
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery()
+                ->getResult();
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('razdel', ['q' => $query]));
+        }
 
         return $this->render('razdel/index.html.twig', [
             'controller_name' => 'RazdelController',
             'razdels' => $razdels,
+            'foundLections' => $foundLections,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 

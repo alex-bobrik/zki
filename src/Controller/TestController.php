@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Lection;
 use App\Entity\Test;
 use App\Entity\TestResult;
 use App\Form\QuestionType;
+use App\Form\SearchType;
 use App\Form\TestType;
 use App\Service\TestService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,10 +14,12 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 class TestController extends AbstractController
 {
@@ -25,10 +29,30 @@ class TestController extends AbstractController
      * @param TestService $testService
      * @return Response
      */
-    public function index(PaginatorInterface $paginator, Request $request)
+    public function index(PaginatorInterface $paginator, Request $request, RouterInterface $router)
     {
-        $testsQuery = $this->getDoctrine()->getRepository(Test::class)
-            ->createQueryBuilder('t');
+        $q = $request->get('q');
+
+        if ($q) {
+            $testsQuery = $this->getDoctrine()->getRepository(Test::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->where('l.name like :name')
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery()
+                ->getResult();
+        } else {
+            $testsQuery = $this->getDoctrine()->getRepository(Test::class)
+                ->createQueryBuilder('t');
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('admin_test', ['q' => $query]));
+        }
 
         $tests = $paginator->paginate(
             $testsQuery,
@@ -39,6 +63,7 @@ class TestController extends AbstractController
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
             'tests' => $tests,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 
@@ -94,10 +119,30 @@ class TestController extends AbstractController
      * @param TestService $testService
      * @return Response
      */
-    public function studentTest(PaginatorInterface $paginator, Request $request)
+    public function studentTest(PaginatorInterface $paginator, Request $request, RouterInterface $router)
     {
-        $testsQuery = $this->getDoctrine()->getRepository(Test::class)
-            ->createQueryBuilder('t');
+        $q = $request->get('q');
+
+        if ($q) {
+            $testsQuery = $this->getDoctrine()->getRepository(Test::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->where('l.name like :name')
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery()
+                ->getResult();
+        } else {
+            $testsQuery = $this->getDoctrine()->getRepository(Test::class)
+                ->createQueryBuilder('t');
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('student_test', ['q' => $query]));
+        }
 
         $tests = $paginator->paginate(
             $testsQuery,
@@ -112,6 +157,7 @@ class TestController extends AbstractController
         return $this->render('test/student_index.html.twig', [
             'controller_name' => 'TestController',
             'tests' => $tests,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 

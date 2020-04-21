@@ -3,8 +3,39 @@
 {% block title %}Hello GroupsController!{% endblock %}
 
 {% block body %}
+    <style>
+        .search {
+            display: flex;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+        }
+    </style>
+
 <div class="container">
     <a href="{{ path('admin_groups_new') }}">Добавить группу</a>
+
+    {{ form_start(formSearch) }}
+    <div class="search">
+        <div class="search-input">
+            {{ form_widget(formSearch.query, {
+                'attr': {
+                    'placeholder': 'Поиск по группам',
+                }
+            }) }}
+        </div>
+        <div class="search-submit">
+            {{ form_widget(formSearch.submit) }}
+        </div>
+        <div class="clear-search">
+            <a href="{{ path('admin_groups') }}" class="btn btn-outline-dark">Очистить</a>
+        </div>
+    </div>
+    {{ form_end(formSearch) }}
+
     <table class="table">
         <thead>
         <tr>

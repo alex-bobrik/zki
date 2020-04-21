@@ -3,22 +3,45 @@
 namespace App\Controller;
 
 use App\Entity\Groups;
+use App\Entity\User;
 use App\Form\GroupsType;
+use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 class GroupsController extends AbstractController
 {
     /**
      * @Route("/teacher/groups", name="admin_groups")
      */
-    public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request)
+    public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request, RouterInterface $router)
     {
-        $groupsQuery = $this->getDoctrine()->getRepository(Groups::class)
-            ->createQueryBuilder('g');
+        $q = $request->get('q');
+
+        if ($q) {
+            $groupsQuery = $this->getDoctrine()->getRepository(Groups::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->where('l.name like :name')
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery();
+        } else {
+            $groupsQuery = $this->getDoctrine()->getRepository(Groups::class)
+                ->createQueryBuilder('l');
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('admin_groups', ['q' => $query]));
+        }
 
         $groups = $paginator->paginate(
             $groupsQuery,
@@ -29,6 +52,7 @@ class GroupsController extends AbstractController
         return $this->render('groups/index.html.twig', [
             'controller_name' => 'GroupsController',
             'groups' => $groups,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 

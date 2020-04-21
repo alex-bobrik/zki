@@ -5,26 +5,53 @@ namespace App\Controller;
 use App\Entity\Lab;
 use App\Entity\LabMaterial;
 use App\Entity\LabResult;
+use App\Entity\Lection;
 use App\Entity\Materials;
 use App\Form\LabResultType;
 use App\Form\LabType;
+use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 class LabController extends AbstractController
 {
     /**
      * @Route("/labs", name="lab")
      */
-    public function index(PaginatorInterface $paginator, Request $request)
+    public function index(PaginatorInterface $paginator, Request $request, RouterInterface $router)
     {
-        $labsQuery = $this->getDoctrine()->getRepository(Lab::class)
-            ->createQueryBuilder('l');
+
+        $q = $request->get('q');
+
+        $foundLections = null;
+        if ($q) {
+            $labsQuery = $this->getDoctrine()->getRepository(Lab::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->where('l.name like :name')
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery();
+        } else {
+            $labsQuery = $this->getDoctrine()->getRepository(Lab::class)
+                ->createQueryBuilder('l');
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('lab', ['q' => $query]));
+        }
+
+
 
         $labs = $paginator->paginate(
             $labsQuery,
@@ -35,6 +62,7 @@ class LabController extends AbstractController
         return $this->render('lab/index.html.twig', [
             'controller_name' => 'LabController',
             'labs' => $labs,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 
