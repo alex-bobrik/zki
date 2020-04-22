@@ -4,55 +4,58 @@
 
 {% block body %}
 
+    <link rel="stylesheet" href="{{ asset('css/wrapper.css') }}">
+
+    <style>
+        .name {
+            width: 70%;
+        }
+
+        .header {
+            margin-top: 20px;
+            display: flex;
+        }
+    </style>
+
     <div class="container">
-        <h3>Раздел: {{ razdel.name }}</h3>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">{{ knp_pagination_sortable(lections, 'Лекция', ['l.name']) }}</th>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="header">
+                <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}" class="btn btn-warning" style="margin-right: 15px">Изменить название раздела</a>
+                <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}" class="btn btn-danger">Удалить раздел</a>
+            </div>
+            <hr>
 
-                <th scope="col">Статус</th>
+        {% endif %}
+        <h3 style="margin-top: 30px">Раздел: {{ razdel.name }}</h3>
+        <hr>
 
-            </tr>
-            </thead>
-            <tbody>
             {% for lection in lections %}
-                <tr>
-                    <td>
-                        <a href="{{ path('razdel_lection_info', {'lectId': lection.id, 'id': razdel.id}) }}">{{ lection.name }}</a>
-                    </td>
-                        <td>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                {% if lection.isComplete %}
-                                    <a href="{{ path('admin_lection_change', {'id': lection.id}) }}">Прошли</a>
-                                {% else %}
-                                    <a href="{{ path('admin_lection_change', {'id': lection.id}) }}">Не прошли</a>
-                                {% endif %}
+                <div class="wrapper">
+                        <a href="{{ path('razdel_lection_info', {'lectId': lection.id, 'id': razdel.id}) }}" class="name">{{ lection.name }}</a>
+                    <div class="isComplete">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {% if lection.isComplete %}
+                                <a href="{{ path('admin_lection_change', {'id': lection.id}) }}">Прошли</a>
                             {% else %}
-                                {% if lection.isComplete %}
-                                    Прошли
-                                {% else %}
-                                    Не прошли
-                                {% endif %}
+                                <a href="{{ path('admin_lection_change', {'id': lection.id}) }}">Не прошли</a>
                             {% endif %}
-
-                        </td>
-                </tr>
+                        {% else %}
+                            {% if lection.isComplete %}
+                                Прошли
+                            {% else %}
+                                Не прошли
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
-            </tbody>
-        </table>
+
         <div class="pagination">
             {{ knp_pagination_render(lections) }}
         </div>
 
-        {% if is_granted('ROLE_ADMIN') %}
-            <hr>
-            <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}">Изменить название раздела</a>
-            <br>
-            <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}">Удалить раздел</a>
-            <br>
-        {% endif %}
+
     </div>
 
 {% endblock %}

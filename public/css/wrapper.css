@@ -1,0 +1,22 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #FFBB5E;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: 0.5s;
+    text-decoration: none;
+    color: black;
+}
+
+.wrapper:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+    color: black;
+}
+
+.wrapper a {
+    text-decoration: none;
+    color: black;
+}

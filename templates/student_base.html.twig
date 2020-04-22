@@ -12,6 +12,21 @@
         {% endblock %}
     </head>
     <body>
+
+    <style>
+        body::after {
+            content: "";
+            background: url("{{ asset('files/images/bg.jpg') }}");
+
+            opacity: 0.08;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
         {% block navbar %}
             <div class="container-xl">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-info">

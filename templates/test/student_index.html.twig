@@ -4,6 +4,8 @@
 
 {% block body %}
 
+    <link rel="stylesheet" href="{{ asset('css/wrapper.css') }}">
+
     <style>
         .search {
             display: flex;
@@ -35,21 +37,12 @@
         </div>
         {{ form_end(formSearch) }}
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">{{ knp_pagination_sortable(tests, 'Тест', ['t.name']) }}</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
             {% for test in tests %}
-                <tr>
-                    <td>{{ test.name }}</td>
-                    <td>
-                        <a href="{{ path('student_test_pass', {'id': test.id}) }}">Пройти тест</a>
+                <div class="wrapper">
+                    <a href="{{ path('student_test_pass', {'id': test.id}) }}" style="width: 70%">{{ test.name }}</a>
+                    <a href="{{ path('student_test_pass', {'id': test.id}) }}" style="width: 30%">Пройти тест</a>
                     </td>
-                </tr>
+                </div>
             {% endfor %}
             </tbody>
         </table>

@@ -4,6 +4,8 @@
 
 {% block body %}
 
+    <link rel="stylesheet" href="{{ asset('css/wrapper.css') }}">
+
     <style>
         .search {
             display: flex;
@@ -16,7 +18,7 @@
 
     <div class="container" style="margin-top: 20px">
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('admin_lab_new') }}">Новая лабораторная</a>
+            <a href="{{ path('admin_lab_new') }}" class="btn btn-warning">Новая лабораторная</a>
             <hr>
         {% endif %}
 
@@ -38,10 +40,10 @@
         </div>
         {{ form_end(formSearch) }}
 
-        <h2>Лабораторные:</h2>
+        <h2 style="margin: 20px">Лабораторные:</h2>
         {% for lab in labs %}
-            <div class="lab">
-                <a href="{{ path('lab_info', {'id': lab.id}) }}">{{ lab.name }}</a>
+            <div class="wrapper">
+                <a href="{{ path('lab_info', {'id': lab.id}) }}" style="width: 100%">{{ lab.name }}</a>
             </div>
         {% endfor %}
         <div class="pagination">
