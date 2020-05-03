@@ -11,22 +11,27 @@
     </style>
 
     <div class="container">
-        <div>
-            <h2>Тест <i>{{ testResult.tests.name }}</i> пройден</h2>
+        <div class="result text-center">
+            <div>
+                <h2>Тест <i>{{ testResult.tests.name }}</i> пройден</h2>
+            </div>
+            <hr>
+            <div>
+                <h3>Начало теста: {{ testResult.startDate.format('d.m.Y H:i:s') }}</h3>
+                <h3>Конец теста: {{ testResult.endDate.format('d.m.Y H:i:s') }}</h3>
+            </div>
+            <hr>
+            <div>
+                <h3>Всего вопросов: <b>{{ testResult.tests.testQuestions.count }}</b></h3>
+                <h3>Правильных ответов: <b>{{ testResult.correctQuestions }}</b></h3>
+            </div>
+            <div>
+                <h2>Результат: <b>{{ (testResult.correctQuestions * 10) / (testResult.tests.testQuestions.count) }}</b></h2>
+            </div>
+            <div>
+                <a href="{{ path('student_test') }}">Все тесты</a>
+            </div>
         </div>
-        <div>
-            <h3>Начало теста: {{ testResult.startDate.format('d.m.Y H:i:s') }}</h3>
-            <h3>Конец теста: {{ testResult.endDate.format('d.m.Y H:i:s') }}</h3>
-        </div>
-        <div>
-            <h3>Всего вопросов: {{ testResult.tests.testQuestions.count }}</h3>
-            <h3>Правильных ответов: {{ testResult.correctQuestions }}</h3>
-        </div>
-        <div>
-            <h2>Результат: {{ (testResult.correctQuestions * 10) / (testResult.tests.testQuestions.count) }}</h2>
-        </div>
-        <div>
-            <a href="{{ path('student_test') }}">Все тесты</a>
-        </div>
+
     </div>
 {% endblock %}

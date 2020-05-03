@@ -31,6 +31,16 @@
 {% endblock %}
 
 {% block body %}
+
+    <style>
+        .answer {
+            display: flex;
+        }
+
+        .answer-text {
+            width: 100%;
+        }
+    </style>
     <div class="container">
         {{ form_start(form, {
             'action': path('student_test_passing',{'testResId': testRes.id}),
@@ -71,7 +81,7 @@
         </div>
     </div>
     <div class="container">
-        <input type="button" id="send" value="Ответить" style="margin: 20px">
+        <input type="button" id="send" value="Ответить" style="margin: 20px" class="btn btn-warning">
 {#        <a href="{{ path('student_test_passing',{'testResId': testRes.id}) }}" id="next" class="btn btn-primary">Next >></a>#}
 {#        <input type="submit" value="Nextt" class="btn btn-primary">#}
     </div>

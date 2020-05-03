@@ -3,7 +3,7 @@ $(document).ready(function () {
     const MAX_ELEMENTS = 10;
 
     function addTagFormDeleteLink(tagFormLi) {
-        let removeFormButton = $('<button type="button">Удалить</button>');
+        let removeFormButton = $('<button type="button" class="btn btn-danger">Удалить</button>');
         $(tagFormLi).append($(removeFormButton));
 
         $(removeFormButton).on('click', function (e) {
@@ -45,10 +45,7 @@ $(document).ready(function () {
             return false;
         } else {
             let checkboxesAmount = $("[type='checkbox']:checked").length;
-            if (checkboxesAmount > 1) {
-                alert('There can only be 1 correct answer');
-                return false;
-            } else if (checkboxesAmount === 0) {
+            if (checkboxesAmount === 0) {
                 alert('Choose correct answer');
                 return false;
             } else {

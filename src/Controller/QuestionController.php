@@ -11,18 +11,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuestionController extends AbstractController
 {
-    /**
-     * @Route("/teacher/questions", name="admin_questions")
-     */
-    public function index()
-    {
-        $questions = $this->getDoctrine()->getRepository(Question::class)->findAll();
-
-        return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController',
-            'questions' => $questions,
-        ]);
-    }
+//    /**
+//     * @Route("/teacher/questions", name="admin_questions")
+//     */
+//    public function index()
+//    {
+//        $questions = $this->getDoctrine()->getRepository(Question::class)->findAll();
+//
+//        return $this->render('question/index.html.twig', [
+//            'controller_name' => 'QuestionController',
+//            'questions' => $questions,
+//        ]);
+//    }
 
     /**
      * @Route("/teacher/questions/new", name="admin_questions_new")
@@ -41,7 +41,7 @@ class QuestionController extends AbstractController
             $question = $form->getData();
             $testService->saveQuestion($question);
 
-            return $this->redirectToRoute('admin_questions');
+            return $this->redirectToRoute('admin_test_new');
         }
 
         return $this->render('question/new.html.twig', [

@@ -23,6 +23,7 @@ class PasswordFormType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
+                    'class' => 'btn btn-warning',
                 ]
             ])
         ;

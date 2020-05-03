@@ -19,7 +19,7 @@
                 </div>
                 <div class="add-answer-block">
                     <button type="button"
-                            class="add-another-collection-widget"
+                            class="add-another-collection-widget btn btn-outline-primary"
                             data-list-selector="#type-fields-list">Добавить ответ
                     </button>
                 </div>
@@ -44,6 +44,9 @@
         <div class="submit-block">
             {{ form_widget(form.submit, {
                 'label': 'Сохранить вопрос',
+                'attr': {
+                    'class': 'btn btn-warning'
+                }
             }) }}
         </div>
     </div>

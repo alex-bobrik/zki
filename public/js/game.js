@@ -18,10 +18,8 @@ $(document).ready(function () {
 
     function checkValidation(){
         let checkboxesAmount = $("[type='checkbox']:checked").length;
-        if (checkboxesAmount > 1) {
-            alert('There can only be one correct answer');
-            return false;
-        } else if (checkboxesAmount === 0) {
+
+        if (checkboxesAmount === 0) {
             alert('Choose the correct answer');
             return false;
         }

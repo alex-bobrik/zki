@@ -24,7 +24,7 @@ class GroupsType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr' => [
-//                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-warning',
                 ]
             ])
         ;
