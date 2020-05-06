@@ -57,6 +57,7 @@ class AccountController extends AbstractController
         $chart->getOptions()->setTitle('Баллы за тесты');
         $chart->getOptions()->setHeight(500);
         $chart->getOptions()->setWidth(1000);
+        $chart->getOptions()->setColors(['#ffc800']);
         $chart->getOptions()->getTitleTextStyle()->setBold(true);
         $chart->getOptions()->getTitleTextStyle()->setColor('#009900');
         $chart->getOptions()->getTitleTextStyle()->setItalic(true);

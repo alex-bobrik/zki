@@ -42,10 +42,10 @@
         </div>
         {{ form_end(formSearch) }}
 
-        <table class="table">
-            <thead>
+        <table class="table table-hover table-borderless">
+            <thead class="thead-light">
             <tr>
-                <th scope="col">{{ knp_pagination_sortable(users, 'ФИО', ['s.fullName']) }}</th>
+                <th scope="col">{{ knp_pagination_sortable(users, 'ФИО', ['u.fullName']) }}</th>
                 <th scope="col">Группа</th>
             </tr>
             </thead>

@@ -43,7 +43,7 @@ class TestController extends AbstractController
                 ->getResult();
         } else {
             $testsQuery = $this->getDoctrine()->getRepository(Test::class)
-                ->createQueryBuilder('t');
+                ->createQueryBuilder('l');
         }
 
         $formSearch = $this->createForm(SearchType::class);

@@ -13,7 +13,7 @@
 
         <p>Статистика по отдельным группам:</p>
         {% for group in groups %}
-            <a href="{{ path('admin_stats_group', {'id': group.id}) }}">{{ group.name }}</a>
+            <a href="{{ path('admin_stats_group', {'id': group.id}) }}" class="btn btn-warning">{{ group.name }}</a>
         {% endfor %}
     </div>
 {% endblock %}

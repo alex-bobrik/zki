@@ -28,7 +28,7 @@
 
     <div class="student">
         <p class="student-name">{{ student.fullName }}, {{ student.groups.name }}</p>
-        <a href="{{ path('admin_students_edit', {'id': student.id}) }}">Изменить</a>
+        <a href="{{ path('admin_students_edit', {'id': student.id}) }}" class="btn btn-warning">Изменить</a>
     </div>
 
     <div id="div_chart"></div>
