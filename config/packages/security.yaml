@@ -38,3 +38,6 @@ security:
          - { path: ^/teacher, roles: ROLE_ADMIN }
          - { path: ^/student, roles: ROLE_USER }
          - { path: ^/account, roles: ROLE_USER }
+         - { path: ^/razdeli, roles: ROLE_USER }
+         - { path: ^/labs, roles: ROLE_USER }
+         - { path: ^/system, roles: ROLE_USER }
