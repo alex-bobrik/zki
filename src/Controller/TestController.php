@@ -98,6 +98,33 @@ class TestController extends AbstractController
     }
 
     /**
+     * @Route("/teacher/test/edit/{id}", name="admin_test_edit", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param TestService $testService
+     * @return Response
+     */
+    public function editTest(int $id, Request $request, TestService $testService)
+    {
+        $test = $this->getDoctrine()->getRepository(Test::class)->find($id);
+
+        $form = $this->createForm(TestType::class, $test);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $test = $form->getData();
+            $testService->saveTest($test);
+
+            return $this->redirectToRoute('admin_test');
+        }
+
+        return $this->render('test/new.html.twig', [
+            'controller_name' => 'TestController',
+            'test' => $test,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/teacher/test/delete/{id}", name="admin_test_delete", requirements={"id"="\d+"})
      * @param Request $request
      * @param TestService $testService

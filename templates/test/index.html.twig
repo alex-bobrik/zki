@@ -55,6 +55,7 @@
                         <a href="{{ path('admin_test_info', {'id': test.id}) }}">{{ test.name }}</a>
                     </td>
                     <td>
+                        <a href="{{ path('admin_test_edit', {'id': test.id}) }}" class="btn btn-primary">Изменить</a>
                         <a href="{{ path('admin_test_delete', {'id': test.id}) }}" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
