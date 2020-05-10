@@ -11,6 +11,10 @@
    </style>
 
    <div class="container">
+      <div class="delete-student">
+         <a href="{{ path('admin_students_delete', {'id': studentId}) }}" class="btn btn-danger" style="margin-top: 10px; margin-bottom: 10px">Удалить студента</a>
+      </div>
+
       {{ form(form) }}
    </div>
 {% endblock %}

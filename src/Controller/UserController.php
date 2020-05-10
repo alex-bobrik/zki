@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Form\SearchType;
 use App\Service\UserService;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -109,6 +110,23 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'controller_name' => 'UserController',
             'form' => $form->createView(),
+            'studentId' => $id,
         ]);
+    }
+
+    /**
+     * @Route("/teacher/students/delete/{id}", name="admin_students_delete")
+     * @param int $id
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function deleteStudent(int $id, EntityManagerInterface $em)
+    {
+        $student = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        $em->remove($student);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_students');
     }
 }
