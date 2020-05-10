@@ -103,4 +103,17 @@ class GroupsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/teacher/groups/delete/{id}", name="admin_groups_delete", requirements={"id"="\d+"})
+     */
+    public function deleteGroup(Request $request, EntityManagerInterface $em, int $id)
+    {
+        $group = $this->getDoctrine()->getRepository(Groups::class)->find($id);
+
+        $em->remove($group);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_groups');
+    }
 }

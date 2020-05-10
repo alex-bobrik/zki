@@ -46,12 +46,12 @@ class User implements UserInterface
     private $groups;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TestResult", mappedBy="students")
+     * @ORM\OneToMany(targetEntity="App\Entity\TestResult", mappedBy="students", orphanRemoval=true)
      */
     private $testResults;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\LabResult", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\LabResult", mappedBy="user", orphanRemoval=true)
      */
     private $labResults;
 

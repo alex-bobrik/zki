@@ -16,7 +16,7 @@
     </style>
 
 <div class="container">
-    <a href="{{ path('admin_groups_new') }}" class="btn btn-warning">Добавить группу</a>
+    <a href="{{ path('admin_groups_new') }}" class="btn btn-warning" style="margin-top: 10px">Добавить группу</a>
 
     {{ form_start(formSearch) }}
     <div class="search">
@@ -51,6 +51,7 @@
                 </td>
                 <td>
                     <a href="{{ path('admin_groups_edit', {'id': group.id}) }}" class="btn btn-primary">Изменить</a>
+                    <a href="{{ path('admin_groups_delete', {'id': group.id}) }}" class="btn btn-danger">Удалить</a>
                 </td>
             </tr>
         {% endfor %}

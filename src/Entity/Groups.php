@@ -24,7 +24,7 @@ class Groups
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="groups")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="groups", orphanRemoval=true)
      */
     private $users;
 
