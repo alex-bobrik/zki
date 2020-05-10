@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Lection;
 use App\Entity\Razdel;
+use App\Form\EditNameFormType;
+use App\Form\LectionType;
 use App\Form\RazdelType;
 use App\Form\SearchType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -190,5 +192,33 @@ class RazdelController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('razdel');
+    }
+
+    /**
+     * @Route("/teacher/lection/edit/{id}", name="admin_lection_edit", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param int $id
+     * @return Response
+     */
+    public function editLection(Request $request, EntityManagerInterface $em, int $id)
+    {
+        /** @var Lection $lection */
+        $lection = $this->getDoctrine()->getRepository(Lection::class)->find($id);
+
+        $form = $this->createForm(EditNameFormType::class, ['name' => $lection->getName()]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $name = $form->get('name')->getData();
+
+            $lection->setName($name);
+            $em->flush();
+
+            return $this->redirectToRoute('razdel_lection_info', ['lectId' => $id, 'id' => $lection->getRazdel()->getId()]);
+        }
+
+        return $this->render('razdel/edit_lection_name.html.twig', [
+           'form' => $form->createView(),
+        ]);
     }
 }

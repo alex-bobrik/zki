@@ -6,6 +6,7 @@
 
     <div class="container" style="margin-top: 20px">
         {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin_lection_edit', {'id': lection.id}) }}" class="btn btn-warning">Изменить название</a>
             <a href="{{ path('admin_lection_delete', {'id': lection.id}) }}" class="btn btn-danger">Удалить лекцию</a>
             <hr>
         {% endif %}
