@@ -7,10 +7,13 @@ use App\Entity\LabMaterial;
 use App\Entity\LabResult;
 use App\Entity\Lection;
 use App\Entity\Materials;
+use App\Form\EditNameFormType;
 use App\Form\LabResultType;
 use App\Form\LabType;
 use App\Form\SearchType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -86,7 +89,7 @@ class LabController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function newLab(Request $request, EntityManagerInterface $em)
     {
@@ -106,7 +109,7 @@ class LabController extends AbstractController
                 /** @var UploadedFile $file */
                 $file = new UploadedFile($labFile->getFileName(), 'q');
 
-                $date = new \DateTime('now');
+                $date = new DateTime('now');
                 $date = $date->format('m-d-Y_H-i-m');
                 $fileName = $file->getFileName() . '_' . $date . '.' . $file->guessExtension();
 
@@ -147,7 +150,7 @@ class LabController extends AbstractController
      * @Route("/teacher/labs/delete/{id}", name="admin_labs_delete", requirements={"id"="\d+"})
      * @param int $id
      * @param EntityManagerInterface $em
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function deleteLab(int $id, EntityManagerInterface $em)
     {
@@ -157,6 +160,34 @@ class LabController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('lab');
+    }
+
+    /**
+     * @Route("/teacher/labs/edit/{id}", name="admin_labs_edit", requirements={"id"="\d+"})
+     * @param int $id
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return Response
+     */
+    public function editLab(int $id, EntityManagerInterface $em, Request $request)
+    {
+        /** @var Lab $lab */
+        $lab = $this->getDoctrine()->getRepository(Lab::class)->find($id);
+
+        $form = $this->createForm(EditNameFormType::class, ['name' => $lab->getName()]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $name = $form->get('name')->getData();
+
+            $lab->setName($name);
+            $em->flush();
+
+            return $this->redirectToRoute('lab_info', ['id' => $id]);
+        }
+
+        return $this->render('lab/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
