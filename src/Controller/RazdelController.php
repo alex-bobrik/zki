@@ -27,9 +27,9 @@ class RazdelController extends AbstractController
         $q = $request->get('q');
         //dump($q); die;
 
-        $foundLections = null;
+//        $foundLections = null;
         if ($q) {
-            $foundLections = $this->getDoctrine()->getRepository(Lection::class)
+            $razdels = $this->getDoctrine()->getRepository(Razdel::class)
                 ->createQueryBuilder('l')
                 ->select('l')
                 ->where('l.name like :name')
@@ -49,7 +49,7 @@ class RazdelController extends AbstractController
         return $this->render('razdel/index.html.twig', [
             'controller_name' => 'RazdelController',
             'razdels' => $razdels,
-            'foundLections' => $foundLections,
+//            'foundLections' => $foundLections,
             'formSearch' => $formSearch->createView(),
         ]);
     }
