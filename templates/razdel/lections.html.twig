@@ -15,6 +15,21 @@
             margin-top: 20px;
             display: flex;
         }
+
+         .pagination {
+             width: 100%;
+             text-align: center;
+         }
+
+        .search {
+            display: flex;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+        }
     </style>
 
     <div class="container">
@@ -22,12 +37,30 @@
         {% if is_granted('ROLE_ADMIN') %}
             <div class="header">
                 <a href="{{ path('admin_razdel_edit', {'id': razdel.id}) }}" class="btn btn-warning" style="margin-right: 15px">Изменить название раздела</a>
+                <a href="{{ path('admin_lection_new') }}" class="btn btn-warning" style="margin-right: 15px">Добавить лекцию</a>
                 <a href="{{ path('admin_razdel_delete', {'id': razdel.id}) }}" class="btn btn-danger">Удалить раздел</a>
             </div>
             <hr>
 
         {% endif %}
         <h3 style="margin-top: 30px">Раздел: {{ razdel.name }}</h3>
+        {{ form_start(formSearch) }}
+        <div class="search">
+            <div class="search-input">
+                {{ form_widget(formSearch.query, {
+                    'attr': {
+                        'placeholder': 'Поиск по лекциям',
+                    }
+                }) }}
+            </div>
+            <div class="search-submit">
+                {{ form_widget(formSearch.submit) }}
+            </div>
+            <div class="clear-search">
+                <a href="{{ path('razdel_lections', {'id': razdel.id}) }}" class="btn btn-outline-dark">Очистить</a>
+            </div>
+        </div>
+        {{ form_end(formSearch) }}
         <hr>
 
             {% for lection in lections %}

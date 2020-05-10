@@ -59,16 +59,39 @@ class RazdelController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function lectionsOfRazdel(int $id, PaginatorInterface $paginator, Request $request)
+    public function lectionsOfRazdel(int $id, PaginatorInterface $paginator, Request $request, RouterInterface $router)
     {
         $razdel = $this->getDoctrine()->getRepository(Razdel::class)->find($id);
 
-        $lectionsQuery = $this->getDoctrine()->getRepository(Lection::class)
-            ->createQueryBuilder('l')
-            ->select('l')
-            ->where('l.razdel = :razdel')
-            ->setParameter('razdel', $razdel)
-            ->getQuery();
+        $q = $request->get('q');
+
+        if ($q) {
+            $lectionsQuery = $this->getDoctrine()->getRepository(Lection::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->join('l.razdel', 'razdel')
+                ->where('l.name like :name')
+                ->andWhere('razdel = :razdel')
+                ->setParameter('razdel', $razdel)
+                ->setParameter('name', '%'.$q.'%')
+                ->getQuery();
+        } else {
+            $lectionsQuery = $this->getDoctrine()->getRepository(Lection::class)
+                ->createQueryBuilder('l')
+                ->select('l')
+                ->join('l.razdel', 'razdel')
+                ->where('razdel = :razdel')
+                ->setParameter('razdel', $razdel)
+                ->getQuery();
+        }
+
+        $formSearch = $this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if ($formSearch->isSubmitted()) {
+            $query = $formSearch->get('query')->getData();
+
+            return new RedirectResponse($router->generate('razdel_lections', ['q' => $query, 'id' => $id]));
+        }
 
         $lections = $paginator->paginate(
             $lectionsQuery,
@@ -80,6 +103,7 @@ class RazdelController extends AbstractController
             'controller_name' => 'RazdelController',
             'razdel' => $razdel,
             'lections' => $lections,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 
