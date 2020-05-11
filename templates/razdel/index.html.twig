@@ -19,7 +19,6 @@
     <div class="container" style="margin-top: 20px">
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('admin_razdel_new') }}" class="btn btn-warning">Добавить раздел</a>
-            <a href="{{ path('admin_lection_new') }}" class="btn btn-warning">Добавить лекцию</a>
             <hr>
         {% endif %}
 
