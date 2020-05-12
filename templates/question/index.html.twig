@@ -2,10 +2,52 @@
 
 {% block title %}Hello QuestionController!{% endblock %}
 
+
+
 {% block body %}
 
-    {% for question in questions %}
-        <p>Name: {{ question.name }}</p>
-    {% endfor %}
+    {% block flash_messages %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ message | raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endblock %}
+
+    <style>
+        .buttons {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="container">
+        <div class="buttons">
+            <a href="{{ path('admin_questions_new') }}" class="btn btn-warning">Новый вопрос</a>
+            <a href="{{ path('admin_test_new') }}" class="btn btn-warning">Создать тест</a>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Вопрос</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.name }}</td>
+                    <td>
+                        <a href="{{ path('admin_questions_edit', {'id': question.id}) }}" class="btn btn-primary">Изменить</a>
+                        <a href="{{ path('admin_questions_delete', {'id': question.id}) }}" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
