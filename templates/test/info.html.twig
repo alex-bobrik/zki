@@ -45,7 +45,9 @@
             <tbody>
             {% for testRes in testResults %}
                 <tr>
-                    <td>{{ testRes.students.fullName }}</td>
+                    <td>
+                        <a href="{{ path('admin_stats_student', {'id': testRes.students.id}) }}"> {{ testRes.students.fullName }}</a>
+                    </td>
                     <td>
                         {{ testRes.startDate.format('d.m.Y H:i:s') }}
                     </td>
