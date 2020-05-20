@@ -27,7 +27,7 @@ class LabResultType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'label' => 'Студент',
+                'label' => 'Учащийся',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.username != :u_username')
