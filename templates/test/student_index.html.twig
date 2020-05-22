@@ -36,8 +36,11 @@
             </div>
         </div>
         {{ form_end(formSearch) }}
+        <hr>
+        <h3 style="margin: 20px">Тесты:</h3>
 
-            {% for test in tests %}
+
+        {% for test in tests %}
                 <div class="wrapper">
                     <a href="{{ path('student_test_pass', {'id': test.id}) }}" style="width: 70%">{{ test.name }}</a>
                     <a href="{{ path('student_test_pass', {'id': test.id}) }}" style="width: 30%">Пройти тест</a>

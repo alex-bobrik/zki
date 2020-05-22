@@ -39,28 +39,14 @@
             </div>
         </div>
         {{ form_end(formSearch) }}
+        <hr>
 
-
-{#        {% if foundLections%}#}
-{#            <h2 style="margin: 20px">Найденные лекции:</h2>#}
-{#            <hr>#}
-{#            {% for lection in foundLections %}#}
-{#                <div class="wrapper">#}
-{#                    <a href="{{ path('razdel_lection_info', {'id': lection.razdel.id, 'lectId': lection.id}) }}" style="width: 70%">#}
-{#                        {{ lection.name }}#}
-{#                    </a>#}
-{#                    <a href="{{ path('razdel_lections', {'id': lection.razdel.id}) }}" style="width: auto">{{ lection.razdel.name}}</a>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        {% else %}#}
             <h2 style="margin: 20px">Разделы:</h2>
-            <hr>
             {% for razdel in razdels %}
                 <div class="wrapper">
                     <a href="{{ path('razdel_lections', {'id': razdel.id}) }}" style="width: 100%">{{ razdel.name }}</a>
                 </div>
             {% endfor %}
-{#        {% endif %}#}
     </div>
 
 

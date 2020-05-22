@@ -43,7 +43,6 @@
             <hr>
 
         {% endif %}
-        <h3 style="margin-top: 30px">Раздел: {{ razdel.name }}</h3>
         {{ form_start(formSearch) }}
         <div class="search">
             <div class="search-input">
@@ -63,7 +62,10 @@
         {{ form_end(formSearch) }}
         <hr>
 
-            {% for lection in lections %}
+        <h3 style="margin: 20px">Раздел: {{ razdel.name }}</h3>
+
+
+        {% for lection in lections %}
                 <div class="wrapper">
                         <a href="{{ path('razdel_lection_info', {'lectId': lection.id, 'id': razdel.id}) }}" class="name">{{ lection.name }}</a>
                     <div class="isComplete">

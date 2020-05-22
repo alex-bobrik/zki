@@ -51,7 +51,6 @@ class RazdelController extends AbstractController
         return $this->render('razdel/index.html.twig', [
             'controller_name' => 'RazdelController',
             'razdels' => $razdels,
-//            'foundLections' => $foundLections,
             'formSearch' => $formSearch->createView(),
         ]);
     }

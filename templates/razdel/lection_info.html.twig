@@ -11,6 +11,8 @@
             <hr>
         {% endif %}
 
+        <a href="{{ path('razdel_lections', {'id': lection.razdel.id}) }}" class="btn btn-warning" style="margin-bottom: 10px">Назад к разделу</a>
+
         <h2>Лекция: {{ lection.name }}</h2>
 
         {% if lection.videoLink %}
