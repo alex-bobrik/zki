@@ -18,6 +18,7 @@ class RazdelType extends AbstractType
                 'label' => 'Раздел',
                 'attr' => [
                     'class' => 'form-control shadow-none',
+                    'maxLength' => '50',
                 ]
             ])
             ->add('submit', SubmitType::class, [

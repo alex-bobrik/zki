@@ -17,10 +17,16 @@ class LabType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Лабораторная',
+                'attr' => [
+                    'maxLength' => '250',
+                ]
             ])
             ->add('videoLink', TextType::class, [
                 'required' => false,
                 'label' => 'Ссылка на видео',
+                'attr' => [
+                    'maxLength' => '250',
+                ]
             ])
             ->add('labMaterials', CollectionType::class, [
                 'entry_type' => LabMaterialType::class,

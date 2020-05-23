@@ -15,7 +15,11 @@ class TestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'maxLength' => '250',
+                ]
+            ])
             ->add('testQuestions', CollectionType::class, [
                 'entry_type' => TestQuestionType::class,
                 'allow_add' => true,

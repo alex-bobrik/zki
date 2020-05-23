@@ -17,7 +17,7 @@ class AnswerType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'attr' => ['class' => 'form-control answer-input shadow-none',
-                    'maxLength' => 250,
+                    'maxLength' => '250',
                     'placeholder' => 'Ответ',
                 ],
                 'label' => false,

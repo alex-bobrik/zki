@@ -18,6 +18,7 @@ class PasswordFormType extends AbstractType
                 'label' => 'Новый пароль',
                 'attr' => [
                     'class' => 'form-control shadow-none',
+                    'maxLength' => '50',
                 ]
             ])
             ->add('submit', SubmitType::class, [

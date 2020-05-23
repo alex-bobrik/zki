@@ -22,6 +22,7 @@ class LectionType extends AbstractType
                 'label' => 'Название лекции',
                 'attr' => [
                     'class' => 'form-control shadow-none',
+                    'maxLength' => '250',
                 ]
             ])
             ->add('razdel', EntityType::class, [
@@ -37,6 +38,7 @@ class LectionType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control shadow-none',
+                    'maxLength' => '250',
                 ]
             ])
             ->add('materials', CollectionType::class, [

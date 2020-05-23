@@ -24,6 +24,7 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Логин',
                     'class' => 'form-control shadow-none',
+                    'maxLength' => '50',
                 ]
             ])
             ->add('fullName', TextType::class, [
@@ -31,6 +32,7 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'ФИО',
                     'class' => 'form-control shadow-none',
+                    'maxLength' => '250',
                 ]
             ])
             ->add('groups', EntityType::class, [

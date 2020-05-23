@@ -18,6 +18,7 @@ class SearchType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
+                    'maxLength' => '250',
                 ]
             ])
             ->add('submit', SubmitType::class, [

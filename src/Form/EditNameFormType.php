@@ -17,6 +17,7 @@ class EditNameFormType extends AbstractType
                 'label' => 'Название',
                 'attr' => [
                     'class' => 'form-control',
+                    'maxLength' => '250',
                 ]
             ])
             ->add('submit', SubmitType::class, [

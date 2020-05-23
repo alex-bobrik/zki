@@ -19,6 +19,7 @@ class GroupsType extends AbstractType
                 'attr' => [
                     'class' => 'form-control shadow-none',
                     'placeholder' => 'Группа',
+                    'maxLength' => '50',
                 ]
             ])
             ->add('submit', SubmitType::class, [
