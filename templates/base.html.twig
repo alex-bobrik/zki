@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
+    {#  Favicon  #}
+    <link rel="icon" href="{{ asset('files/images/favicon.ico') }}" type="image/ico"/>
+    <link rel="shortcut icon" href="{{ asset('files/images/favicon.ico') }}" type="image/x-icon"/>
+
     {% block stylesheets %}
         <link rel="stylesheet" href={{ asset('css/bootstrap.css') }}>
         <link rel="stylesheet" href={{ asset('css/bootstrap-grid.css') }}>
