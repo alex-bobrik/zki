@@ -103,7 +103,8 @@ class StatisticsController extends AbstractController
         return $this->render('statistics/group.html.twig', [
             'controller_name' => 'StatisticsController',
             'chart' => $chart,
-            'students' => $students
+            'students' => $students,
+            'group' => $group,
         ]);
     }
 

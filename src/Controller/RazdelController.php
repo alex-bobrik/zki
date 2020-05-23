@@ -27,9 +27,7 @@ class RazdelController extends AbstractController
         $razdels = $this->getDoctrine()->getRepository(Razdel::class)->findAll();
 
         $q = $request->get('q');
-        //dump($q); die;
 
-//        $foundLections = null;
         if ($q) {
             $razdels = $this->getDoctrine()->getRepository(Razdel::class)
                 ->createQueryBuilder('l')

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Изменить учащегося{% endblock %}
 
 {% block body %}
 
@@ -12,7 +12,7 @@
 
    <div class="container">
       <div class="delete-student">
-         <a href="{{ path('admin_students_delete', {'id': studentId}) }}" class="btn btn-danger" style="margin-top: 10px; margin-bottom: 10px">Удалить студента</a>
+         <a href="{{ path('admin_students_delete', {'id': studentId}) }}" class="btn btn-danger" style="margin-top: 10px; margin-bottom: 10px">Удалить учащегося</a>
       </div>
 
       {{ form(form) }}
