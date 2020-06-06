@@ -39,7 +39,7 @@ class LabResultType extends AbstractType
                 'attr' => ['class'=> 'form-control shadow-none']
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Сохранить',
+                'label' => 'Зачесть',
                 'attr' => [
                     'class' => 'btn btn-warning',
                 ]
