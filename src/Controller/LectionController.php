@@ -42,24 +42,28 @@ class LectionController extends AbstractController
 
             foreach ($files as $lectionFile) {
                 /** @var UploadedFile $file */
-                $file = new UploadedFile($lectionFile->getFileName(), 'q');
+                try {
+                    $file = new UploadedFile($lectionFile->getFileName(), 'q');
 
-                $date = new DateTime('now');
-                $date = $date->format('m-d-Y_H-i-m');
-                $fileName = $file->getFileName() . '_' . $date . '.' . $file->guessExtension();
+                    $date = new DateTime('now');
+                    $date = $date->format('m-d-Y_H-i-m');
+                    $fileName = $file->getFileName() . '_' . $date . '.' . $file->guessExtension();
 
-                $file->move(
-                    $this->getParameter('files_directory'),
-                    $fileName
-                );
+                    $file->move(
+                        $this->getParameter('files_directory'),
+                        $fileName
+                    );
 
-                $material = new Materials();
-                $material->setFileName($fileName);
-                $material->setName($lectionFile->getName());
+                    $material = new Materials();
+                    $material->setFileName($fileName);
+                    $material->setName($lectionFile->getName());
 
-                $materials[] = $material;
+                    $materials[] = $material;
 
-                $lection->removeMaterial($lectionFile);
+                    $lection->removeMaterial($lectionFile);
+                } catch (Exception $exception) {
+                    throw new Exception($exception->getMessage());
+                }
             }
 
             for ($i = 0; $i < count($materials); $i++) {
