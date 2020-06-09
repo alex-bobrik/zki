@@ -34,7 +34,7 @@ class Lab
     private $labMaterials;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\LabResult", mappedBy="lab")
+     * @ORM\OneToMany(targetEntity="App\Entity\LabResult", mappedBy="lab", orphanRemoval=true)
      */
     private $labResults;
 
