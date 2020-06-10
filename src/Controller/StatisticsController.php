@@ -73,6 +73,7 @@ class StatisticsController extends AbstractController
             ->createQueryBuilder('s')
             ->select('s')
             ->where('s.groups = :group')
+            ->orderby('s.fullName', 'ASC')
             ->setParameter('group', $group)
             ->getQuery();
 
