@@ -63,13 +63,25 @@ class StatisticsController extends AbstractController
     /**
      * @Route("/teacher/stats/groups/{id}", name="admin_stats_group", requirements={"id"="\d+"})
      */
-    public function groupStats(StatsService $service, int $id)
+    public function groupStats(StatsService $service, int $id, PaginatorInterface $paginator, Request $request)
     {
         $group = $this->getDoctrine()->getRepository(Groups::class)->find($id);
 
         $tests = $this->getDoctrine()->getRepository(Test::class)->findAll();
 
-        $students = $group->getUsers();
+        $studentsQuery = $this->getDoctrine()->getRepository(User::class)
+            ->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.groups = :group')
+            ->setParameter('group', $group)
+            ->getQuery();
+
+        $students = $paginator->paginate(
+            $studentsQuery,
+            $request->query->getInt('page', 1),
+            100
+        );
+
 
         $header = array();
         $header[] = 'Тест';
