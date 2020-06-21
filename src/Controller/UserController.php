@@ -30,11 +30,15 @@ class UserController extends AbstractController
                 ->createQueryBuilder('u')
                 ->select('u')
                 ->where('u.fullName like :name')
+                ->orderBy('u.fullName', 'ASC')
                 ->setParameter('name', '%'.$q.'%')
                 ->getQuery();
         } else {
             $usersQuery = $this->getDoctrine()->getRepository(User::class)
-                ->createQueryBuilder('u');
+                ->createQueryBuilder('u')
+                ->select('u')
+                ->orderBy('u.fullName', 'ASC')
+                ->getQuery();
         }
 
         $formSearch = $this->createForm(SearchType::class);
